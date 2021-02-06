@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key key}) : super(key: key);
+  double _deviceWidth;
+  double _deviceHeight;
 
   @override
   Widget build(BuildContext context) {
+    _deviceWidth = MediaQuery.of(context).size.width;
+    _deviceHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       /* Pegando as configurações de background main */
       backgroundColor: Theme.of(context).backgroundColor,
@@ -18,11 +22,18 @@ class LoginScreen extends StatelessWidget {
 
   Widget _loginPageUI(context) {
     return Container(
+      /* Criar calculo proporcional para não pegar toda tela */
+      padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.10),
       child: Column(
         children: <Widget>[
+          Container(height: 50),
           _headingAuth(),
+          Container(height: 20),
           _formLogin(context),
-          _loginButton(),
+          Container(height: 20),
+          _loginButton(context),
+          Container(height: 30),
+          _textRegister(context),
         ],
       ),
     );
@@ -43,6 +54,7 @@ class LoginScreen extends StatelessWidget {
 
   Widget _formLogin(context) {
     return Container(
+      padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -103,7 +115,30 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _loginButton() {
-    return Container();
+  Widget _loginButton(context) {
+    return Container(
+      width: _deviceWidth,
+      child: MaterialButton(
+        onPressed: () {
+          print('login...');
+        },
+        color: Theme.of(context).primaryColor,
+        child: Text("LOGIN"),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      ),
+    );
+  }
+
+  Widget _textRegister(context) {
+    return GestureDetector(
+        /* onTap e para quando clicar nele */
+        onTap: () {
+          print('redirecionar');
+        },
+        child: Text(
+          'Cadastrar-se',
+          style:
+              TextStyle(color: Theme.of(context).primaryColor, fontSize: 18.2),
+        ));
   }
 }
