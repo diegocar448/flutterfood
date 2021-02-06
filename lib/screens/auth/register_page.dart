@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutterfood/screens/auth/register_page.dart';
+import 'package:flutterfood/screens/auth/login_page.dart';
 import 'package:flutterfood/screens/auth/widgets/heading_auth.dart';
 
-class LoginScreen extends StatelessWidget {
+class RegisterScreen extends StatelessWidget {
   double _deviceWidth;
   double _deviceHeight;
 
@@ -56,6 +56,7 @@ class LoginScreen extends StatelessWidget {
           ]),
       child: Column(
         children: <Widget>[
+          _nameTextField(context),
           _emailTextField(context),
           _passwordTextField(context),
         ],
@@ -64,6 +65,27 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _emailTextField(context) {
+    /* Usaremos o TextFormField por ele ter varios recursos relacionados a validação */
+    return TextFormField(
+      autocorrect: false,
+      autofocus: false,
+      style: TextStyle(color: Theme.of(context).primaryColor),
+      cursorColor: Theme.of(context).primaryColor,
+      decoration: InputDecoration(
+          /* adicionará borda apenas na parte inferior do field */
+          border: UnderlineInputBorder(
+              borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+          enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+          focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+          contentPadding: EdgeInsets.all(10),
+          hintText: "E-mail",
+          hintStyle: TextStyle(color: Theme.of(context).primaryColor)),
+    );
+  }
+
+  Widget _nameTextField(context) {
     /* Usaremos o TextFormField por ele ter varios recursos relacionados a validação */
     return TextFormField(
       autocorrect: false,
@@ -79,7 +101,7 @@ class LoginScreen extends StatelessWidget {
           focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Theme.of(context).primaryColor)),
           contentPadding: EdgeInsets.all(10),
-          hintText: "E-mail",
+          hintText: "Nome",
           hintStyle: TextStyle(color: Theme.of(context).primaryColor)),
     );
   }
@@ -100,7 +122,7 @@ class LoginScreen extends StatelessWidget {
           focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Theme.of(context).primaryColor)),
           contentPadding: EdgeInsets.all(10),
-          hintText: "Password",
+          hintText: "Senha",
           hintStyle: TextStyle(color: Theme.of(context).primaryColor)),
     );
   }
@@ -110,10 +132,10 @@ class LoginScreen extends StatelessWidget {
       width: _deviceWidth,
       child: MaterialButton(
         onPressed: () {
-          print('login...');
+          print('register...');
         },
         color: Theme.of(context).primaryColor,
-        child: Text("LOGIN"),
+        child: Text("CADASTRAR"),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       ),
     );
@@ -123,13 +145,17 @@ class LoginScreen extends StatelessWidget {
     return GestureDetector(
         /* onTap e para quando clicar nele */
         onTap: () {
-          /* Varia redirecionar para a view register_page.dart */
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => RegisterScreen(),
+          /* 
+            1º Varia redirecionar para a view register_page.dart 
+            2º pushReplacement ele faz um replace para o usuario não ter a opção 
+              de voltar e colocar uma tela sobre outra
+          */
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => LoginScreen(),
           ));
         },
         child: Text(
-          'Cadastrar-se',
+          'Já têm Cadastro? Faça o Login!',
           style:
               TextStyle(color: Theme.of(context).primaryColor, fontSize: 18.2),
         ));
