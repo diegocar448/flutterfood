@@ -11,7 +11,34 @@ class RestaurantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(name, style: TextStyle(color: Colors.black)),
+      padding: EdgeInsets.only(top: 4, right: 1, left: 1, bottom: 2),
+      child: Card(
+        elevation: 2.5,
+        child: Container(
+          height: 80,
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey[200]),
+              borderRadius: BorderRadius.all(Radius.circular(4)),
+              color: Colors.white),
+          child: Padding(
+            padding: EdgeInsets.all(4),
+            child: Row(children: <Widget>[
+              Container(
+                width: 80,
+                height: 80,
+                child: ClipOval(
+                    child: Image.asset('assets/images/IconeFlutterFood.png')),
+              ),
+              VerticalDivider(color: Colors.black54),
+              /* Usamos o Expanded() para 'forçar' e adicionar o texto no card*/
+              Expanded(
+                  child: Text(name,
+                      style: TextStyle(
+                          color: Colors.black54, fontWeight: FontWeight.bold)))
+            ]),
+          ),
+        ),
+      ),
     );
   }
 }
