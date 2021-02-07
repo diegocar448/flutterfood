@@ -147,12 +147,13 @@ class RegisterScreen extends StatelessWidget {
         onTap: () {
           /* 
             1º Varia redirecionar para a view register_page.dart 
-            2º pushReplacement ele faz um replace para o usuario não ter a opção 
+            2º (pushReplacement ou pushReplacementNamed) ele faz um replace para o usuario não ter a opção 
               de voltar e colocar uma tela sobre outra
           */
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
+          /* Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => LoginScreen(),
-          ));
+          )); */
+          Navigator.pushReplacementNamed(context, '/login');
         },
         child: Text(
           'Já têm Cadastro? Faça o Login!',

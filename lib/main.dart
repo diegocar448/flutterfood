@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './screens/auth/register_page.dart';
 import './screens/auth/login_page.dart';
 
 void main() => runApp(FlutterFoodApp());
@@ -17,7 +18,16 @@ class FlutterFoodApp extends StatelessWidget {
           backgroundColor: Colors.white,
           accentColor: Colors.black,
           brightness: Brightness.dark),
-      home: LoginScreen(),
+      initialRoute: '/login',
+      /* 
+        Aqui vamos trabalhar com a parte de roteamento nativa do Flutter  
+        String == Nome da Rota
+        WidgetBuilder == (A rota em si)
+      */
+      routes: <String, WidgetBuilder>{
+        '/login': (context) => LoginScreen(),
+        '/register': (context) => RegisterScreen(),
+      },
     );
   }
 }

@@ -124,9 +124,10 @@ class LoginScreen extends StatelessWidget {
         /* onTap e para quando clicar nele */
         onTap: () {
           /* Varia redirecionar para a view register_page.dart */
-          Navigator.of(context).push(MaterialPageRoute(
+          /* Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => RegisterScreen(),
-          ));
+          )); */
+          Navigator.pushNamed(context, '/register');
         },
         child: Text(
           'Cadastrar-se',
