@@ -110,7 +110,7 @@ class LoginScreen extends StatelessWidget {
       width: _deviceWidth,
       child: MaterialButton(
         onPressed: () {
-          print('login...');
+          Navigator.pushReplacementNamed(context, '/restaurants');
         },
         color: Theme.of(context).primaryColor,
         child: Text("LOGIN"),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Restaurant {
   String uuid;
   String name;
