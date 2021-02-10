@@ -36,11 +36,14 @@ class Categories extends StatelessWidget {
       margin: EdgeInsets.all(5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
-          border: Border.all(color: Colors.grey)),
+          border: Border.all(
+              color: category.name == 'Doces' ? Colors.black : Colors.grey)),
       child: Center(
         child: Text(
           category.name,
-          style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: category.name == 'Doces' ? Colors.black : Colors.grey,
+              fontWeight: FontWeight.bold),
         ),
       ),
     );
