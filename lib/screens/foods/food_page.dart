@@ -27,25 +27,29 @@ class _FoodsScreenState extends State<FoodsScreen> {
   List<Food> _foods = [
     new Food(
         identify: 'qwert',
-        image: 'assets/images/IconeFlutterFood.png',
+        image:
+            'https://i.pinimg.com/originals/90/4a/8a/904a8a938527c0570833047102744f99.jpg',
         description: "Apenas um teste",
         price: '12.2',
         title: "Sanduiche"),
     new Food(
         identify: 'qwert',
-        image: 'assets/images/IconeFlutterFood.png',
+        image:
+            'https://i.pinimg.com/originals/90/4a/8a/904a8a938527c0570833047102744f99.jpg',
         description: "Apenas um teste",
         price: '14.4',
         title: "Açai"),
     new Food(
         identify: 'qwert',
-        image: 'assets/images/IconeFlutterFood.png',
+        image:
+            'https://i.pinimg.com/originals/90/4a/8a/904a8a938527c0570833047102744f99.jpg',
         description: "Apenas um teste",
         price: '18.8',
         title: "Comida Japonesa"),
     new Food(
         identify: 'qwert',
-        image: 'assets/images/IconeFlutterFood.png',
+        image:
+            'https://i.pinimg.com/originals/90/4a/8a/904a8a938527c0570833047102744f99.jpg',
         description: "Apenas um teste",
         price: '20.2',
         title: "Quarto Teste"),
@@ -65,6 +69,7 @@ class _FoodsScreenState extends State<FoodsScreen> {
   /* Aqui teremos a listagem das comidas e depois a listagem das categorias */
   Widget buildScreen() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[Categories(_categories), _buildFoods()],
     );
   }
