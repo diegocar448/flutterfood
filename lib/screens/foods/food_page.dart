@@ -79,7 +79,7 @@ class _FoodsScreenState extends State<FoodsScreen> {
       /* Pegamos a altura total - 230 */
       height: (MediaQuery.of(context).size.height - 230),
       width: MediaQuery.of(context).size.width,
-      color: Colors.black,
+      color: Colors.white,
       child: ListView.builder(
           itemCount: _foods.length,
           itemBuilder: (context, index) {

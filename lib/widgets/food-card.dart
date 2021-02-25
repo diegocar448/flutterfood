@@ -31,12 +31,15 @@ class FoodCard extends StatelessWidget {
             color: Colors.white,
           ),
           child: Container(
+            padding: EdgeInsets.all(8),
             child: Row(
               children: <Widget>[
                 /* Listar imagem */
                 _buildImageFood(),
                 /* Listar preço, descrição... */
                 _buildInfoFood(),
+                /* precisamos passar o context por ser um StatelessWidget */
+                _buildButtonCart(context),
               ],
             ),
           ),
@@ -49,6 +52,7 @@ class FoodCard extends StatelessWidget {
     return Container(
         width: 80,
         height: 80,
+        margin: EdgeInsets.only(right: 8),
         child: ClipOval(
           //child: Image.asset('assets/images/IconeFlutterFood.png')),
           /* Aqui vamos usar a lib cached_network_image */
@@ -72,7 +76,11 @@ class FoodCard extends StatelessWidget {
 
   Widget _buildInfoFood() {
     /* Listar primeiro o nome do produto, depois descrição e depois preço */
-    return Column(
+    return Expanded(
+        child: Column(
+      /* .start joga o texto para o inicio */
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(title,
             style: TextStyle(
@@ -80,14 +88,14 @@ class FoodCard extends StatelessWidget {
               fontSize: 16,
               fontWeight: FontWeight.bold,
             )),
-        Container(height: 5),
+        Container(height: 7),
         Text(description,
             style: TextStyle(
               color: Colors.black38,
               fontSize: 12,
               fontWeight: FontWeight.normal,
             )),
-        Container(height: 5),
+        Container(height: 7),
         Text("R\$ $price",
             style: TextStyle(
               color: Colors.black38,
@@ -95,6 +103,14 @@ class FoodCard extends StatelessWidget {
               fontWeight: FontWeight.w500,
             )),
       ],
+    ));
+  }
+
+  Widget _buildButtonCart(context) {
+    return Container(
+      child: IconTheme(
+          data: IconThemeData(color: Theme.of(context).primaryColor),
+          child: Icon(Icons.shopping_cart)),
     );
   }
 }
