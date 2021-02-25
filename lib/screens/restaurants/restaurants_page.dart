@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 import '../../models/Restaurant.dart';
 import './widgets/RestaurantCard.dart';
+import '../../widgets/flutter_bottom_navigator.dart';
 
 class RestaurantsPage extends StatefulWidget {
   RestaurantsPage({Key key}) : super(key: key);
@@ -33,13 +35,13 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Restaurantes'),
-        centerTitle: true,
-      ),
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: _buildRestaurants(context),
-    );
+        appBar: AppBar(
+          title: Text('Restaurantes'),
+          centerTitle: true,
+        ),
+        backgroundColor: Theme.of(context).backgroundColor,
+        body: _buildRestaurants(context),
+        bottomNavigationBar: FlutterFoodBottomNavigator(0));
   }
 
   Widget _buildRestaurants(context) {

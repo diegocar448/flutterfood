@@ -4,6 +4,7 @@ import 'package:flutterfood/models/Category.dart';
 import 'package:flutterfood/models/Food.dart';
 import 'package:flutterfood/screens/foods/widgets/Categories.dart';
 import 'package:flutterfood/widgets/food-card.dart';
+import '../../widgets/flutter_bottom_navigator.dart';
 
 class FoodsScreen extends StatefulWidget {
   FoodsScreen({Key key}) : super(key: key);
@@ -63,6 +64,7 @@ class _FoodsScreenState extends State<FoodsScreen> {
       ),
       backgroundColor: Theme.of(context).backgroundColor,
       body: buildScreen(),
+      bottomNavigationBar: FlutterFoodBottomNavigator(0),
     );
   }
 
@@ -77,7 +79,7 @@ class _FoodsScreenState extends State<FoodsScreen> {
   Widget _buildFoods() {
     return Container(
       /* Pegamos a altura total - 230 */
-      height: (MediaQuery.of(context).size.height - 230),
+      height: (MediaQuery.of(context).size.height - 190),
       width: MediaQuery.of(context).size.width,
       color: Colors.white,
       child: ListView.builder(
