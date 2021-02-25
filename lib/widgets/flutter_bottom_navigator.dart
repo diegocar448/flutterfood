@@ -21,7 +21,14 @@ class FlutterFoodBottomNavigator extends StatelessWidget {
       ],
       /* adicionamos onTap para saber exatamente onde o usuario clicou */
       onTap: (index) {
-        print(index);
+        switch (index) {
+          case 2:
+            /* Usamo pushReplacementNamed no lugar do push para evitar empilhar um screen sobre outra */
+            Navigator.pushReplacementNamed(context, "/cart");
+            break;
+          default:
+            Navigator.pushReplacementNamed(context, "/restaurants");
+        }
       },
     );
   }
