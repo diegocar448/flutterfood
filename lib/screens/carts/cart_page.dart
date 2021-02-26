@@ -65,10 +65,58 @@ class CartScreen extends StatelessWidget {
         child: Row(
           children: <Widget>[
             ShowImageCachedNetwork(
-                'https://florinafood.gr/imgs/logos/fresh.png')
+                'https://florinafood.gr/imgs/logos/fresh.png'),
+            _showDetailItemCart(context)
           ],
         ),
       ),
     );
+  }
+
+  Widget _showDetailItemCart(context) {
+    return Expanded(
+        child: Container(
+            padding: EdgeInsets.only(top: 4, right: 4, left: 4),
+            child: Column(
+                /* jogando para o inicio ao lado da imagem */
+                crossAxisAlignment: CrossAxisAlignment.start,
+                /* alinhar verticalmente ao centro */
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "PIZZA HUT",
+                    maxLines: 2,
+                    style: TextStyle(
+                        fontSize: 14, color: Theme.of(context).primaryColor),
+                  ),
+                  Container(
+                      //color: Colors.black,
+
+                      child: Row(
+                          /* alinhar verticalmente ao espaço entre */
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                        Text(
+                          "R\$ 399,00",
+                          style: TextStyle(color: Colors.green),
+                        ),
+                        Container(height: 6),
+                        Container(
+                          child: Row(children: <Widget>[
+                            Icon(Icons.remove,
+                                size: 24, color: Colors.grey.shade700),
+                            Container(
+                              padding: EdgeInsets.only(
+                                  top: 4, bottom: 4, left: 12, right: 12),
+                              color: Theme.of(context).primaryColor,
+                              child: Text('2',
+                                  style: TextStyle(color: Colors.white)),
+                            ),
+                            Icon(Icons.add,
+                                size: 24, color: Colors.grey.shade700)
+                          ]),
+                        )
+                      ]))
+                ])));
   }
 }
