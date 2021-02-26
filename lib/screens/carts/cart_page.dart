@@ -53,24 +53,38 @@ class CartScreen extends StatelessWidget {
 
   /* Aqui construimos os items da lista */
   Widget _buildCartItems(context) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      height: 100,
-      decoration: BoxDecoration(
-          color: Colors.grey.shade100,
-          border: Border.all(color: Colors.grey[200]),
-          borderRadius: BorderRadius.all(Radius.circular(16))),
-      child: Container(
-        padding: EdgeInsets.all(2),
-        child: Row(
-          children: <Widget>[
-            ShowImageCachedNetwork(
-                'https://florinafood.gr/imgs/logos/fresh.png'),
-            _showDetailItemCart(context)
-          ],
+    return Stack(children: <Widget>[
+      Container(
+        margin: EdgeInsets.all(10),
+        height: 100,
+        decoration: BoxDecoration(
+            color: Colors.grey.shade100,
+            border: Border.all(color: Colors.grey[200]),
+            borderRadius: BorderRadius.all(Radius.circular(16))),
+        child: Container(
+          padding: EdgeInsets.all(2),
+          child: Row(
+            children: <Widget>[
+              ShowImageCachedNetwork(
+                  'https://florinafood.gr/imgs/logos/fresh.png'),
+              _showDetailItemCart(context)
+            ],
+          ),
         ),
       ),
-    );
+      Align(
+        alignment: Alignment.topRight,
+        child: Container(
+          height: 24,
+          width: 24,
+          margin: EdgeInsets.only(top: 2, right: 4),
+          decoration: BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.all(Radius.circular(100))),
+          child: Icon(Icons.close, size: 20, color: Colors.white),
+        ),
+      )
+    ]);
   }
 
   Widget _showDetailItemCart(context) {
