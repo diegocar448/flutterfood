@@ -24,7 +24,9 @@ class CartScreen extends StatelessWidget {
     return Column(
       children: <Widget>[
         _buildHeader(),
-        _buildCartList(context),
+
+        Expanded(child: _buildCartList(context)),
+        _buildFormComment(context),
         // _buildCartList(),
         //_buildFormComment(),
         //_buttonCheckout(),
@@ -41,13 +43,11 @@ class CartScreen extends StatelessWidget {
   }
 
   Widget _buildCartList(context) {
-    return Container(
-      //color: Colors.amber,
-      height: (MediaQuery.of(context).size.height - 175),
-      child: ListView.builder(
-        itemCount: 6,
-        itemBuilder: (context, index) => _buildCartItems(context),
-      ),
+    return ListView.builder(
+      shrinkWrap: true,
+      primary: false,
+      itemCount: 6,
+      itemBuilder: (context, index) => _buildCartItems(context),
     );
   }
 
@@ -132,5 +132,29 @@ class CartScreen extends StatelessWidget {
                         )
                       ]))
                 ])));
+  }
+
+  Widget _buildFormComment(context) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: TextFormField(
+        autocorrect: true,
+        style: TextStyle(color: Theme.of(context).primaryColor),
+        cursorColor: Theme.of(context).primaryColor,
+        onSaved: (value) {
+          print(value);
+        },
+        decoration: InputDecoration(
+          labelText: 'Comentario (ex: sem cebola)',
+          labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+        ),
+      ),
+    );
   }
 }
