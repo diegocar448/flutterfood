@@ -24,11 +24,8 @@ class CartScreen extends StatelessWidget {
     return Column(
       children: <Widget>[
         _buildHeader(),
-
-        Expanded(child: _buildCartList(context)),
+        _buildCartList(context),
         _buildFormComment(context),
-        // _buildCartList(),
-        //_buildFormComment(),
         //_buttonCheckout(),
       ],
     );
@@ -56,7 +53,7 @@ class CartScreen extends StatelessWidget {
     return Stack(children: <Widget>[
       Container(
         margin: EdgeInsets.all(10),
-        height: 100,
+        height: 50,
         decoration: BoxDecoration(
             color: Colors.grey.shade100,
             border: Border.all(color: Colors.grey[200]),
@@ -66,7 +63,8 @@ class CartScreen extends StatelessWidget {
           child: Row(
             children: <Widget>[
               ShowImageCachedNetwork(
-                  'https://florinafood.gr/imgs/logos/fresh.png'),
+                  /* 'https://florinafood.gr/imgs/logos/fresh.png'), */
+                  'http://10.0.2.2/imgs/IconeFlutterFood.png'),
               _showDetailItemCart(context)
             ],
           ),
@@ -145,15 +143,15 @@ class CartScreen extends StatelessWidget {
           print(value);
         },
         decoration: InputDecoration(
-          labelText: 'Comentario (ex: sem cebola)',
-          labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-          focusedBorder: OutlineInputBorder(
+            labelText: 'Comentário (ex: sem cebola)',
+            labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+            enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide(color: Theme.of(context).primaryColor)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide(color: Theme.of(context).primaryColor)),
-        ),
+              borderSide: BorderSide(color: Theme.of(context).primaryColor),
+            )),
       ),
     );
   }
