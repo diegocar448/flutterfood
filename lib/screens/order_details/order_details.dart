@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -32,8 +34,8 @@ class OrderDetailsScreen extends StatelessWidget {
             title: "Açai"),
       ],
       evaluations: [
-        Evaluation(comment: "Pedido muito bom", nameUser: "Diego", stars: 4),
-        Evaluation(comment: "Gostei muito bom", nameUser: "Etevaldo", stars: 5),
+        /* Evaluation(comment: "Pedido muito bom", nameUser: "Diego", stars: 4),
+        Evaluation(comment: "Gostei muito bom", nameUser: "Etevaldo", stars: 5), */
       ]);
 
   @override
@@ -71,7 +73,7 @@ class OrderDetailsScreen extends StatelessWidget {
                   color: Colors.black,
                   fontSize: 22,
                   fontWeight: FontWeight.bold)),
-          _buildEvaluationsOrder(),
+          _buildEvaluationsOrder(context),
         ],
       ),
     );
@@ -111,17 +113,34 @@ class OrderDetailsScreen extends StatelessWidget {
             }));
   }
 
-  Widget _buildEvaluationsOrder() {
-    return Container(
-      padding: EdgeInsets.only(left: 10),
-      child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: _order.evaluations.length,
-          itemBuilder: (context, index) {
-            final Evaluation evalution = _order.evaluations[index];
-            return _buildEvalutionItem(evalution, context);
-          }),
-    );
+  Widget _buildEvaluationsOrder(context) {
+    return _order.evaluations.length > 0
+        ? Container(
+            padding: EdgeInsets.only(left: 10),
+            child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: _order.evaluations.length,
+                itemBuilder: (context, index) {
+                  final Evaluation evalution = _order.evaluations[index];
+                  return _buildEvalutionItem(evalution, context);
+                }),
+          )
+        : Container(
+            height: 40,
+            margin: EdgeInsets.only(bottom: 30, top: 10),
+            child: RaisedButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    "/evaluation-order",
+                  );
+                },
+                color: Colors.orange,
+                elevation: 2.2,
+                child: Text("Avaliar o Pedido"),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
+                    side: BorderSide(color: Colors.orangeAccent))));
   }
 
   Widget _buildEvalutionItem(Evaluation evaluation, context) {
