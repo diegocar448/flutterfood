@@ -93,6 +93,8 @@ class _FoodsScreenState extends State<FoodsScreen> {
               image: food.image,
               price: food.price,
               title: food.title,
+              /* Aqui deixo como false pq quero que exiba a lista do carrinho */
+              notShowIconCart: false,
             );
           }),
     );

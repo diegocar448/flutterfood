@@ -4,6 +4,7 @@ import '../../widgets/flutter_bottom_navigator.dart';
 import '../../models/Order.dart';
 import '../../models/Food.dart';
 import '../../models/Evaluation.dart';
+import '../../widgets/food-card.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
   Order _order = Order(
@@ -36,7 +37,7 @@ class OrderDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("Detalhes do Pedido"), centerTitle: true),
       backgroundColor: Theme.of(context).backgroundColor,
-      body: _buildOrderDetails(context),
+      body: SingleChildScrollView(child: _buildOrderDetails(context)),
       bottomNavigationBar: FlutterFoodBottomNavigator(1),
     );
   }
@@ -45,6 +46,7 @@ class OrderDetailsScreen extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _makeTextOrder("Numero", _order.identify),
           _makeTextOrder("Data", _order.date),
@@ -52,6 +54,13 @@ class OrderDetailsScreen extends StatelessWidget {
           _makeTextOrder("Total", _order.total.toString()),
           _makeTextOrder("Mesa", _order.table),
           _makeTextOrder("Comentário", _order.comment),
+          Container(height: 30),
+          Text("Comidas",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold)),
+          _buildFoodOrder()
         ],
       ),
     );
@@ -70,5 +79,22 @@ class OrderDetailsScreen extends StatelessWidget {
                     color: Colors.black, fontWeight: FontWeight.bold)),
           ],
         ));
+  }
+
+  Widget _buildFoodOrder() {
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: _order.foods.length,
+        itemBuilder: (context, index) {
+          final Food food = _order.foods[index];
+          return FoodCard(
+            identify: food.identify,
+            description: food.description,
+            image: food.image,
+            price: food.price,
+            title: food.title,
+            notShowIconCart: true,
+          );
+        });
   }
 }

@@ -8,6 +8,7 @@ class FoodCard extends StatelessWidget {
   String description;
   String price;
   String image;
+  bool notShowIconCart;
 
   /* Deixando fica obrigatório passar os parâmetros */
   FoodCard({
@@ -16,6 +17,7 @@ class FoodCard extends StatelessWidget {
     this.description,
     this.price,
     this.image,
+    this.notShowIconCart,
   });
 
   @override
@@ -107,10 +109,12 @@ class FoodCard extends StatelessWidget {
   }
 
   Widget _buildButtonCart(context) {
-    return Container(
-      child: IconTheme(
-          data: IconThemeData(color: Theme.of(context).primaryColor),
-          child: Icon(Icons.shopping_cart)),
-    );
+    return notShowIconCart
+        ? Container()
+        : Container(
+            child: IconTheme(
+                data: IconThemeData(color: Theme.of(context).primaryColor),
+                child: Icon(Icons.shopping_cart)),
+          );
   }
 }
