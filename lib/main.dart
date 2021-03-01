@@ -5,7 +5,8 @@ import './screens/auth/login_page.dart';
 import './screens/restaurants/restaurants_page.dart';
 import './screens/foods/food_page.dart';
 import './screens/carts/cart_page.dart';
-import 'package:flutterfood/screens/orders/order_page.dart';
+import './screens/orders/order_page.dart';
+import './screens/order_details/order_details.dart';
 
 void main() => runApp(FlutterFoodApp());
 
@@ -35,6 +36,7 @@ class FlutterFoodApp extends StatelessWidget {
         '/foods': (context) => FoodsScreen(),
         '/cart': (context) => CartScreen(),
         '/my-orders': (context) => OrdersScreen(),
+        '/order_details': (context) => OrderDetailsScreen(),
       },
     );
   }
