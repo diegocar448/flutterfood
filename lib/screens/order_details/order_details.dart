@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../widgets/flutter_bottom_navigator.dart';
 import '../../models/Order.dart';
@@ -30,7 +31,10 @@ class OrderDetailsScreen extends StatelessWidget {
             price: '14.4',
             title: "Açai"),
       ],
-      evaluations: []);
+      evaluations: [
+        Evaluation(comment: "Pedido muito bom", nameUser: "Diego", stars: 4),
+        Evaluation(comment: "Gostei muito bom", nameUser: "Etevaldo", stars: 5),
+      ]);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +64,14 @@ class OrderDetailsScreen extends StatelessWidget {
                   color: Colors.black,
                   fontSize: 22,
                   fontWeight: FontWeight.bold)),
-          _buildFoodOrder()
+          _buildFoodOrder(),
+          Container(height: 30),
+          Text("Avaliações",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold)),
+          _buildEvaluationsOrder(),
         ],
       ),
     );
@@ -82,19 +93,79 @@ class OrderDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildFoodOrder() {
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: _order.foods.length,
-        itemBuilder: (context, index) {
-          final Food food = _order.foods[index];
-          return FoodCard(
-            identify: food.identify,
-            description: food.description,
-            image: food.image,
-            price: food.price,
-            title: food.title,
-            notShowIconCart: true,
-          );
-        });
+    return Container(
+        padding: EdgeInsets.only(left: 10),
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: _order.foods.length,
+            itemBuilder: (context, index) {
+              final Food food = _order.foods[index];
+              return FoodCard(
+                identify: food.identify,
+                description: food.description,
+                image: food.image,
+                price: food.price,
+                title: food.title,
+                notShowIconCart: true,
+              );
+            }));
+  }
+
+  Widget _buildEvaluationsOrder() {
+    return Container(
+      padding: EdgeInsets.only(left: 10),
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: _order.evaluations.length,
+          itemBuilder: (context, index) {
+            final Evaluation evalution = _order.evaluations[index];
+            return _buildEvalutionItem(evalution, context);
+          }),
+    );
+  }
+
+  Widget _buildEvalutionItem(Evaluation evaluation, context) {
+    return Card(
+      elevation: 2.5,
+      child: Container(
+        padding: EdgeInsets.all(12),
+        decoration: BoxDecoration(
+            color: Colors.grey[50],
+            border: Border.all(color: Colors.grey[100]),
+            borderRadius: BorderRadius.all(Radius.circular(4))),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            RatingBar.builder(
+              initialRating: evaluation.stars,
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              itemSize: 12,
+              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+              itemBuilder: (context, _) => Icon(
+                Icons.star,
+                color: Colors.amber,
+              ),
+              onRatingUpdate: null,
+            ),
+            Row(
+              children: [
+                Text(
+                  "${evaluation.nameUser} - ",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "${evaluation.comment} - ",
+                  style: TextStyle(color: Colors.black),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
