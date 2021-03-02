@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './screens/speech/speech_page.dart';
-import './screens/auth/register_page.dart';
-import './screens/auth/login_page.dart';
-import './screens/restaurants/restaurants_page.dart';
-import './screens/foods/food_page.dart';
-import './screens/carts/cart_page.dart';
-import './screens/orders/order_page.dart';
-import './screens/orders/evaluation_order.dart';
-import './screens/order_details/order_details.dart';
-import './screens/profile/profile_page.dart';
+import './routes.dart';
+import './constants/app_theme.dart';
 
 void main() => runApp(FlutterFoodApp());
 
@@ -21,11 +13,7 @@ class FlutterFoodApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'FlutterFood',
-      theme: ThemeData(
-          primaryColor: Color.fromRGBO(147, 70, 248, 1),
-          backgroundColor: Colors.white,
-          accentColor: Colors.black,
-          brightness: Brightness.dark),
+      theme: themeData,
       /* Essa será a tela, rota, inicial */
       initialRoute: '/',
       /* 
@@ -33,18 +21,7 @@ class FlutterFoodApp extends StatelessWidget {
         String == Nome da Rota
         WidgetBuilder == (A rota em si)
       */
-      routes: <String, WidgetBuilder>{
-        '/': (context) => SpeechScreen(),
-        '/login': (context) => LoginScreen(),
-        '/register': (context) => RegisterScreen(),
-        '/restaurants': (context) => RestaurantsPage(),
-        '/foods': (context) => FoodsScreen(),
-        '/cart': (context) => CartScreen(),
-        '/my-orders': (context) => OrdersScreen(),
-        '/order_details': (context) => OrderDetailsScreen(),
-        '/evaluation-order': (context) => EvaluationScreen(),
-        '/profile': (context) => ProfileScreen(),
-      },
+      routes: Routes.routes,
     );
   }
 }
