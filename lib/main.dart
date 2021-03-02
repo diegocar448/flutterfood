@@ -8,6 +8,7 @@ import './screens/carts/cart_page.dart';
 import './screens/orders/order_page.dart';
 import './screens/orders/evaluation_order.dart';
 import './screens/order_details/order_details.dart';
+import './screens/profile/profile_page.dart';
 
 void main() => runApp(FlutterFoodApp());
 
@@ -39,6 +40,7 @@ class FlutterFoodApp extends StatelessWidget {
         '/my-orders': (context) => OrdersScreen(),
         '/order_details': (context) => OrderDetailsScreen(),
         '/evaluation-order': (context) => EvaluationScreen(),
+        '/profile': (context) => ProfileScreen(),
       },
     );
   }
