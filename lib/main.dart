@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './screens/speech/speech_page.dart';
 import './screens/auth/register_page.dart';
 import './screens/auth/login_page.dart';
 import './screens/restaurants/restaurants_page.dart';
@@ -25,13 +26,15 @@ class FlutterFoodApp extends StatelessWidget {
           backgroundColor: Colors.white,
           accentColor: Colors.black,
           brightness: Brightness.dark),
-      initialRoute: '/login',
+      /* Essa será a tela, rota, inicial */
+      initialRoute: '/',
       /* 
         Aqui vamos trabalhar com a parte de roteamento nativa do Flutter  
         String == Nome da Rota
         WidgetBuilder == (A rota em si)
       */
       routes: <String, WidgetBuilder>{
+        '/': (context) => SpeechScreen(),
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
         '/restaurants': (context) => RestaurantsPage(),
