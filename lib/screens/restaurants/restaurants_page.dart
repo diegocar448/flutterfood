@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/services.dart';
+import 'package:flutterfood/data/network/dio_client.dart';
 
 import '../../models/Restaurant.dart';
 import './widgets/RestaurantCard.dart';
@@ -34,6 +35,14 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
   ];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getRestaurants();
+  }
+
+  @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
 
@@ -64,5 +73,17 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
         },
       ),
     );
+  }
+
+  void getRestaurants() async {
+    final response = await DioClient().get('v1/tenants');
+    /* final restaurants = (response.data['data'] as List)
+        .map((restaurants) => Restaurant.fromJson(restaurants))
+        .toList();
+    setState(() {
+      _restaurants.addAll(restaurants);
+    }); */
+    print(response);
+    /* http://127.0.0.1/api/v1/tenants */
   }
 }
