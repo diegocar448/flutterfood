@@ -1,4 +1,4 @@
-const API_URL = 'https://7406286d88c3.ngrok.io/api/';
+const API_URL = 'https://d5d6752292ef.ngrok.io/api/';
 const API_VERSION = 'v1';
 const API_RECEIVE_TIMEOUT = 5000;
 const API_CONNECTION_TIMEOUT = 25000;

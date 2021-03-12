@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/services.dart';
-import 'package:flutterfood/data/network/dio_client.dart';
 
 import '../../models/Restaurant.dart';
 import './widgets/RestaurantCard.dart';
 import '../../widgets/flutter_bottom_navigator.dart';
+import '../../data/network/repositories/restaurant_repository.dart';
 
 class RestaurantsPage extends StatefulWidget {
   RestaurantsPage({Key key}) : super(key: key);
@@ -65,13 +64,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
   void getRestaurants() async {
     setState(() => isLoading = true);
 
-    final response = await DioClient().get('v1/tenants');
-    final restaurants = (response.data['data'] as List).map((restaurant) {
-      //_restaurants.add(Restaurant.fromJson(restaurant));
-      //print('----------------------');
-
-      return Restaurant.fromJson(restaurant);
-    }).toList();
+    final restaurants = await RestaurantRepository().getRestaurants();
 
     setState(() {
       _restaurants.addAll(restaurants);
