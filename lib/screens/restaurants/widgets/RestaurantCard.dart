@@ -16,6 +16,7 @@ class RestaurantCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         print(name);
+        print("Puta que pariu");
         Navigator.pushNamed(context, '/foods');
       },
       child: Container(
