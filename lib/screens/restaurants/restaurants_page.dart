@@ -16,23 +16,8 @@ class RestaurantsPage extends StatefulWidget {
 
 class _RestaurantsPageState extends State<RestaurantsPage> {
   /* simulando listagem de test */
-  List<Restaurant> _restaurants = [
-    Restaurant(
-        name: "Empresa tal",
-        image: '',
-        contact: 'empresatal@gmail.com',
-        uuid: '12345678'),
-    Restaurant(
-        name: "Empresa Essa",
-        image: '',
-        contact: 'empresaessa@gmail.com',
-        uuid: '87654321'),
-    Restaurant(
-        name: "IMLanches",
-        image: '',
-        contact: 'imlanches@gmail.com',
-        uuid: '12312312'),
-  ];
+  List<Restaurant> _restaurants = [];
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -52,7 +37,9 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
           centerTitle: true,
         ),
         backgroundColor: Theme.of(context).backgroundColor,
-        body: _buildRestaurants(context),
+        body: isLoading
+            ? CircularProgressIndicator()
+            : _buildRestaurants(context),
         bottomNavigationBar: FlutterFoodBottomNavigator(0));
   }
 
@@ -76,14 +63,20 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
   }
 
   void getRestaurants() async {
+    setState(() => isLoading = true);
+
     final response = await DioClient().get('v1/tenants');
-    /* final restaurants = (response.data['data'] as List)
-        .map((restaurants) => Restaurant.fromJson(restaurants))
-        .toList();
+    final restaurants = (response.data['data'] as List).map((restaurant) {
+      //_restaurants.add(Restaurant.fromJson(restaurant));
+      //print('----------------------');
+
+      return Restaurant.fromJson(restaurant);
+    }).toList();
+
     setState(() {
       _restaurants.addAll(restaurants);
-    }); */
-    print(response);
-    /* http://127.0.0.1/api/v1/tenants */
+    });
+
+    setState(() => isLoading = false);
   }
 }
