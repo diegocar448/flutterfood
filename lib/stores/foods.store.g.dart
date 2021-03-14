@@ -24,15 +24,22 @@ mixin _$FoodsStore on _FoodsStoreBase, Store {
     });
   }
 
+  final _$getFoodsAsyncAction = AsyncAction('_FoodsStoreBase.getFoods');
+
+  @override
+  Future<dynamic> getFoods(String tokenCompany) {
+    return _$getFoodsAsyncAction.run(() => super.getFoods(tokenCompany));
+  }
+
   final _$_FoodsStoreBaseActionController =
       ActionController(name: '_FoodsStoreBase');
 
   @override
-  void add(Food food) {
+  void addFood(Food food) {
     final _$actionInfo = _$_FoodsStoreBaseActionController.startAction(
-        name: '_FoodsStoreBase.add');
+        name: '_FoodsStoreBase.addFood');
     try {
-      return super.add(food);
+      return super.addFood(food);
     } finally {
       _$_FoodsStoreBaseActionController.endAction(_$actionInfo);
     }
