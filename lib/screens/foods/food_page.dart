@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutterfood/models/Category.dart';
-import 'package:flutterfood/models/Food.dart';
+import '../../models/Category.dart';
+import '../../models/Food.dart';
+import '../../models/Restaurant.dart';
 import 'package:flutterfood/screens/foods/widgets/Categories.dart';
 import 'package:flutterfood/widgets/food-card.dart';
 import '../../widgets/flutter_bottom_navigator.dart';
@@ -14,8 +15,9 @@ class FoodsScreen extends StatefulWidget {
 }
 
 class _FoodsScreenState extends State<FoodsScreen> {
-  @override
+  Restaurant _restaurant;
 
+  @override
   /* Aqui teremos duas propriedades */
   /* Aqui criamos a lista */
   List<Category> _categories = [
@@ -56,10 +58,18 @@ class _FoodsScreenState extends State<FoodsScreen> {
         title: "Quarto Teste"),
   ];
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    RouteSettings settings = ModalRoute.of(context).settings;
+    _restaurant = settings.arguments;
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("EspecializaTi Res"),
+        title: Text('${_restaurant.name}'),
         centerTitle: true,
       ),
       backgroundColor: Theme.of(context).backgroundColor,

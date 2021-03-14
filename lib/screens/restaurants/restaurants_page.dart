@@ -50,12 +50,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
         itemBuilder: (context, index) {
           final Restaurant restaurant = _restaurants[index];
 
-          return RestaurantCard(
-            uuid: restaurant.uuid,
-            name: restaurant.name,
-            image: restaurant.image,
-            contact: restaurant.contact,
-          );
+          return RestaurantCard(restaurant: restaurant);
         },
       ),
     );

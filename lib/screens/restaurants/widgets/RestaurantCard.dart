@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import '../../../models/Restaurant.dart';
 
 class RestaurantCard extends StatelessWidget {
-  final String uuid;
-  final String name;
-  final String image;
-  final String contact;
+  final Restaurant restaurant;
 
-  const RestaurantCard({this.uuid, this.name, this.image, this.contact});
+  const RestaurantCard({this.restaurant});
 
   @override
   Widget build(BuildContext context) {
     /* GestureDetector para quando clicar na imagem ele acessar a proxima tela */
     return GestureDetector(
       onTap: () {
-        print(name);
-        print("Puta que pariu");
-        Navigator.pushNamed(context, '/foods');
+        print(restaurant.name);
+        Navigator.pushNamed(context, '/foods', arguments: restaurant);
       },
       child: Container(
         padding: EdgeInsets.only(top: 4, right: 1, left: 1, bottom: 2),
@@ -39,8 +36,8 @@ class RestaurantCard extends StatelessWidget {
                       //child: Image.asset('assets/images/IconeFlutterFood.png')),
                       /* Aqui vamos usar a lib cached_network_image */
                       child: CachedNetworkImage(
-                        imageUrl: image != ''
-                            ? image
+                        imageUrl: restaurant.image != ''
+                            ? restaurant.image
                             : 'https://florinafood.gr/imgs/logos/fresh.png',
                         placeholder: (context, url) => Container(
                           height: 80,
@@ -57,7 +54,7 @@ class RestaurantCard extends StatelessWidget {
                 VerticalDivider(color: Colors.black54),
                 /* Usamos o Expanded() para 'forçar' e adicionar o texto no card*/
                 Expanded(
-                    child: Text(name,
+                    child: Text(restaurant.name,
                         style: TextStyle(
                             color: Colors.black54,
                             fontWeight: FontWeight.bold)))
