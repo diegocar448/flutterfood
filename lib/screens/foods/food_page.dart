@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../models/Category.dart';
 import '../../models/Food.dart';
@@ -6,6 +7,7 @@ import '../../models/Restaurant.dart';
 import 'package:flutterfood/screens/foods/widgets/Categories.dart';
 import 'package:flutterfood/widgets/food-card.dart';
 import '../../widgets/flutter_bottom_navigator.dart';
+import '../../stores/foods.store.dart';
 
 class FoodsScreen extends StatefulWidget {
   FoodsScreen({Key key}) : super(key: key);
@@ -16,6 +18,7 @@ class FoodsScreen extends StatefulWidget {
 
 class _FoodsScreenState extends State<FoodsScreen> {
   Restaurant _restaurant;
+  FoodsStore storeFoods = new FoodsStore();
 
   @override
   /* Aqui teremos duas propriedades */
@@ -27,43 +30,15 @@ class _FoodsScreenState extends State<FoodsScreen> {
     new Category(name: 'Bolachas', description: "asd", identify: 'asdas'),
   ];
 
-  List<Food> _foods = [
-    new Food(
-        identify: 'qwert',
-        image:
-            'https://i.pinimg.com/originals/90/4a/8a/904a8a938527c0570833047102744f99.jpg',
-        description: "Apenas um teste",
-        price: '12.2',
-        title: "Sanduiche"),
-    new Food(
-        identify: 'qwert',
-        image:
-            'https://i.pinimg.com/originals/90/4a/8a/904a8a938527c0570833047102744f99.jpg',
-        description: "Apenas um teste",
-        price: '14.4',
-        title: "Açai"),
-    new Food(
-        identify: 'qwert',
-        image:
-            'https://i.pinimg.com/originals/90/4a/8a/904a8a938527c0570833047102744f99.jpg',
-        description: "Apenas um teste",
-        price: '18.8',
-        title: "Comida Japonesa"),
-    new Food(
-        identify: 'qwert',
-        image:
-            'https://i.pinimg.com/originals/90/4a/8a/904a8a938527c0570833047102744f99.jpg',
-        description: "Apenas um teste",
-        price: '20.2',
-        title: "Quarto Teste"),
-  ];
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     RouteSettings settings = ModalRoute.of(context).settings;
     _restaurant = settings.arguments;
+
+    /* passando o token (uuid) */
+    storeFoods.getFoods(_restaurant.uuid);
   }
 
   Widget build(BuildContext context) {
@@ -92,21 +67,24 @@ class _FoodsScreenState extends State<FoodsScreen> {
       height: (MediaQuery.of(context).size.height - 190),
       width: MediaQuery.of(context).size.width,
       color: Colors.white,
-      child: ListView.builder(
-          itemCount: _foods.length,
-          itemBuilder: (context, index) {
-            final Food food = _foods[index];
+      /* Observer vai observar a lista e verificar se houve alteração ou não */
+      child: Observer(
+        builder: (context) => ListView.builder(
+            itemCount: storeFoods.foods.length,
+            itemBuilder: (context, index) {
+              final Food food = storeFoods.foods[index];
 
-            return FoodCard(
-              identify: food.identify,
-              description: food.description,
-              image: food.image,
-              price: food.price,
-              title: food.title,
-              /* Aqui deixo como false pq quero que exiba a lista do carrinho */
-              notShowIconCart: false,
-            );
-          }),
+              return FoodCard(
+                identify: food.identify,
+                description: food.description,
+                image: food.image,
+                price: food.price,
+                title: food.title,
+                /* Aqui deixo como false pq quero que exiba a lista do carrinho */
+                notShowIconCart: false,
+              );
+            }),
+      ),
     );
   }
 }

@@ -21,7 +21,7 @@ class Food {
       identify: jsonData['identify'],
       title: jsonData['title'],
       description: jsonData['description'],
-      price: jsonData['price'],
+      price: jsonData['price'].toString(),
       image: jsonData['image'],
     );
   }
