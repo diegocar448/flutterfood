@@ -4,8 +4,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import '../../models/Category.dart';
 import '../../models/Food.dart';
 import '../../models/Restaurant.dart';
-
+import 'package:flutterfood/screens/foods/widgets/Categories.dart';
+import 'package:flutterfood/widgets/food-card.dart';
 import '../../widgets/flutter_bottom_navigator.dart';
+import '../../stores/foods.store.dart';
 
 class FoodsScreen extends StatefulWidget {
   FoodsScreen({Key key}) : super(key: key);
