@@ -15,6 +15,12 @@ abstract class _FoodsStoreBase with Store {
   @observable
   ObservableList<Food> foods = ObservableList<Food>();
 
+  @observable
+  bool isLoading = false;
+
+  @action
+  void setLoading(bool value) => isLoading = value;
+
   @action
   void addFood(Food food) {
     foods.add(food);
@@ -37,8 +43,14 @@ abstract class _FoodsStoreBase with Store {
 
   @action
   Future getFoods(String tokenCompany) async {
+    /* Inicia preloader CircularProgressIndicator */
+    setLoading(true);
+
     final response = await _repository.getFoods(tokenCompany);
 
-    return response.map((food) => addFood(Food.fromJson(food))).toList();
+    /* Finaliza preloader CircularProgressIndicator */
+    setLoading(false);
+
+    response.map((food) => addFood(Food.fromJson(food))).toList();
   }
 }

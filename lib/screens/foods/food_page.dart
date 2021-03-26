@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 
 import '../../models/Category.dart';
 import '../../models/Food.dart';
@@ -57,19 +58,34 @@ class _FoodsScreenState extends State<FoodsScreen> {
   Widget buildScreen() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[Categories(_categories), _buildFoods()],
+      children: <Widget>[
+        Categories(_categories),
+        Observer(
+          builder: (context) {
+            return storeFoods.isLoading
+                ? CircularProgressIndicator()
+                : storeFoods.foods.length == 0
+                    ? Center(
+                        child: Text(
+                          'Nenhum Produto',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      )
+                    : _buildFoods();
+          },
+        ),
+      ],
     );
   }
 
   Widget _buildFoods() {
     return Container(
-      /* Pegamos a altura total - 230 */
-      height: (MediaQuery.of(context).size.height - 190),
-      width: MediaQuery.of(context).size.width,
-      color: Colors.white,
-      /* Observer vai observar a lista e verificar se houve alteração ou não */
-      child: Observer(
-        builder: (context) => ListView.builder(
+        /* Pegamos a altura total - 230 */
+        height: (MediaQuery.of(context).size.height - 190),
+        width: MediaQuery.of(context).size.width,
+        color: Colors.white,
+        /* Observer vai observar a lista e verificar se houve alteração ou não */
+        child: ListView.builder(
             itemCount: storeFoods.foods.length,
             itemBuilder: (context, index) {
               final Food food = storeFoods.foods[index];
@@ -83,8 +99,6 @@ class _FoodsScreenState extends State<FoodsScreen> {
                 /* Aqui deixo como false pq quero que exiba a lista do carrinho */
                 notShowIconCart: false,
               );
-            }),
-      ),
-    );
+            }));
   }
 }
