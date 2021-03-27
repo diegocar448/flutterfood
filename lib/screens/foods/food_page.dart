@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
 
 import '../../models/Category.dart';
 import '../../models/Food.dart';
@@ -10,6 +9,7 @@ import '../../widgets/food-card.dart';
 import '../../widgets/flutter_bottom_navigator.dart';
 import '../../stores/foods.store.dart';
 import '../../widgets/custom_circular_progress_indicator.dart';
+import '../../stores/categories.store.dart';
 
 class FoodsScreen extends StatefulWidget {
   FoodsScreen({Key key}) : super(key: key);
@@ -21,23 +21,26 @@ class FoodsScreen extends StatefulWidget {
 class _FoodsScreenState extends State<FoodsScreen> {
   Restaurant _restaurant;
   FoodsStore storeFoods = new FoodsStore();
+  /* Aqui vamos criar um objeto do nosso categoryStore (Aqui ja vai carregar as categorias da company especifica) */
+  CategoriesStore storeCategories = new CategoriesStore();
 
   @override
   /* Aqui teremos duas propriedades */
   /* Aqui criamos a lista */
-  List<Category> _categories = [
-    new Category(name: 'Salgados', description: "asd", identify: 'asdas'),
-    new Category(name: 'Doces', description: "asd", identify: 'asdas'),
-    new Category(name: 'Bolos', description: "asd", identify: 'asdas'),
-    new Category(name: 'Bolachas', description: "asd", identify: 'asdas'),
-  ];
 
+  /* Aqui conseguimos retornar todos os dados do restaurantes */
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     RouteSettings settings = ModalRoute.of(context).settings;
     _restaurant = settings.arguments;
+
+    /* 
+      Antes de fazer o carregamento das comidas, faremos aqui, o carregamento de nossas categorias,
+      passando o token == _restaurant.uuid
+    */
+    storeCategories.getCategories(_restaurant.uuid);
 
     /* passando o token (uuid) */
     storeFoods.getFoods(_restaurant.uuid);
@@ -60,7 +63,21 @@ class _FoodsScreenState extends State<FoodsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Categories(_categories),
+        Observer(builder: (context) {
+          return storeCategories.isLoading
+              ? CustomCircularProgressIndicator(
+                  textLabel: "Carregando as categorias...",
+                )
+              : storeFoods.foods.length == 0
+                  ? Center(
+                      child: Text(
+                        'Nenhuma Categoria',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    )
+                  /* aqui pegamos as categorias, usamos o widget Categories para ter a responsividade*/
+                  : Categories(storeCategories.categories);
+        }),
         Observer(
           builder: (context) {
             return storeFoods.isLoading

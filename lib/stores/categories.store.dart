@@ -11,7 +11,7 @@ abstract class _CategoriesStoreBase with Store {
   CategoryRepository repository = new CategoryRepository();
 
   @observable
-  ObservableList<Category> categories = ObserverList<Category>();
+  ObservableList<Category> categories = ObservableList<Category>();
 
   @observable
   bool isLoading = false;
@@ -46,10 +46,15 @@ abstract class _CategoriesStoreBase with Store {
     /* Assim que recarregar a nossa getCategories vamos limpar os dados anteriores antes de inserir os novos dados */
     clearCategory();
 
+    /* Aqui nós iremos acessar o repository que faz a requisição para a nossa API laravel */
     final response = await repository.getCategories(tokenCompany);
 
+    /* Aqui formatamos os dados que retornaram de API para o formato list */
     response
         .map((categoryJson) => addCategory(Category.fromJson(categoryJson)))
         .toList();
+
+    /* Após concluir a requisição passamos o isLoading para false */
+    setLoading(false);
   }
 }
