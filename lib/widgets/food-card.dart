@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import '../stores/foods.store.dart';
@@ -8,7 +9,7 @@ class FoodCard extends StatelessWidget {
   bool notShowIconCart;
   Food food;
 
-  FoodsStore storeFoods = new FoodsStore();
+  //FoodsStore storeFoods = new FoodsStore();
 
   /* Deixando fica obrigatório passar os parâmetros */
   /* Aqui deixo this.notShowIconCart como false pq quero que exiba a lista do carrinho */
@@ -104,6 +105,9 @@ class FoodCard extends StatelessWidget {
 
   /* Aqui seria o botão icone do carrinho */
   Widget _buildButtonCart(context) {
+    /* Aqui pegamos a mesma instancia usadas em outros lugares (aqui nosso provider) */
+    final storeFoods = Provider.of<FoodsStore>(context);
+
     return notShowIconCart
         ? Container()
         : Container(

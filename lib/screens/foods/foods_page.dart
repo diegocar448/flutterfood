@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/Category.dart';
 import '../../models/Food.dart';
@@ -20,18 +21,23 @@ class FoodsScreen extends StatefulWidget {
 
 class _FoodsScreenState extends State<FoodsScreen> {
   Restaurant _restaurant;
-  FoodsStore storeFoods = new FoodsStore();
-  /* Aqui vamos criar um objeto do nosso categoryStore (Aqui ja vai carregar as categorias da company especifica) */
-  CategoriesStore storeCategories = new CategoriesStore();
 
-  @override
-  /* Aqui teremos duas propriedades */
-  /* Aqui criamos a lista */
+  /* 
+    Vamos usar um provider para criar a nossa instancia e centralizar e unificar pegando o provider 
+    do arquivo main.dart
+   */
+  FoodsStore storeFoods;
+  /* Aqui ja vai carregar as categorias da company especifica */
+  CategoriesStore storeCategories;
 
   /* Aqui conseguimos retornar todos os dados do restaurantes */
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    /* Aqui instanciamos os nossos providers */
+    storeFoods = Provider.of<FoodsStore>(context);
+    storeCategories = Provider.of<CategoriesStore>(context);
 
     RouteSettings settings = ModalRoute.of(context).settings;
     _restaurant = settings.arguments;
