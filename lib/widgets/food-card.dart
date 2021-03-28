@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import '../stores/foods.store.dart';
 import '../models/Food.dart';
 
 class FoodCard extends StatelessWidget {
   bool notShowIconCart;
   Food food;
+
+  FoodsStore storeFoods = new FoodsStore();
 
   /* Deixando fica obrigatório passar os parâmetros */
   /* Aqui deixo this.notShowIconCart como false pq quero que exiba a lista do carrinho */
@@ -99,13 +102,25 @@ class FoodCard extends StatelessWidget {
     ));
   }
 
+  /* Aqui seria o botão icone do carrinho */
   Widget _buildButtonCart(context) {
     return notShowIconCart
         ? Container()
         : Container(
             child: IconTheme(
-                data: IconThemeData(color: Theme.of(context).primaryColor),
-                child: Icon(Icons.shopping_cart)),
+              data: IconThemeData(color: Theme.of(context).primaryColor),
+              child: storeFoods.inFoodCart(food)
+                  ?
+                  /* Aqui adicionamos o GestureDetector para tomar uma ação caso entre nesse condição */
+                  GestureDetector(
+                      /* Qdo clicar aqui ele remove o item do carrinho */
+                      onTap: () => storeFoods.removeFoodCart(food),
+                      child: Icon(Icons.remove_shopping_cart))
+                  : GestureDetector(
+                      onTap: () => storeFoods.addFoodCart(food),
+                      child: Icon(Icons.shopping_cart),
+                    ),
+            ),
           );
   }
 }

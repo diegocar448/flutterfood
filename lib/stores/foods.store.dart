@@ -63,17 +63,26 @@ abstract class _FoodsStoreBase with Store {
 
   @action
   void addFoodCart(Food food) {
+    print('addFoodCart');
     cartItems.add(food);
+    /* Pegar a lista e inserir na propria lista (touch) */
+    foods = foods;
   }
 
   @action
   void removeFoodCart(Food food) {
+    print('removeFoodCart');
     cartItems.remove(food);
+    /* Pegar a lista e inserir na propria lista (touch) */
+    foods = foods;
   }
 
   @action
   void clearCart() {
+    print('clearCart');
     cartItems.clear();
+    /* Pegar a lista e inserir na propria lista (touch) */
+    foods = foods;
   }
 
   /* Métodos para indicar se têm ou não produto no carrinho */

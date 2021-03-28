@@ -159,7 +159,7 @@ class CartScreen extends StatelessWidget {
         style: TextStyle(color: Theme.of(context).primaryColor),
         cursorColor: Theme.of(context).primaryColor,
         onSaved: (value) {
-          print(value);
+          //print(value);
         },
         decoration: InputDecoration(
             labelText: 'Comentário (ex: sem cebola)',
@@ -190,7 +190,7 @@ class CartScreen extends StatelessWidget {
           ]),
       child: RaisedButton(
         onPressed: () {
-          print("checkout");
+          //print("checkout");
         },
         child: Text("Finaliza pedido"),
         color: Colors.transparent,

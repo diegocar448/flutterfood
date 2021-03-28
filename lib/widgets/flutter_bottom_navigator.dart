@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import '../stores/foods.store.dart';
 
 class FlutterFoodBottomNavigator extends StatelessWidget {
   int _active_item = 0;
+  FoodsStore storeFoods = new FoodsStore();
 
   FlutterFoodBottomNavigator(this._active_item);
 
@@ -16,7 +18,8 @@ class FlutterFoodBottomNavigator extends StatelessWidget {
       items: <Widget>[
         Icon(Icons.home),
         Icon(Icons.list),
-        Icon(Icons.shopping_cart),
+        /* Aqui será o icone do carrinho no rodape */
+        _iconCart(),
         Icon(Icons.supervised_user_circle)
       ],
       /* adicionamos onTap para saber exatamente onde o usuario clicou */
@@ -42,6 +45,32 @@ class FlutterFoodBottomNavigator extends StatelessWidget {
             Navigator.pushReplacementNamed(context, "/restaurants");
         }
       },
+    );
+  }
+
+  Widget _iconCart() {
+    return Stack(
+      children: [
+        Icon(Icons.shopping_cart),
+        Positioned(
+          right: 0,
+          child: Container(
+              padding: EdgeInsets.all(1),
+              decoration: BoxDecoration(
+                  color: Colors.green, borderRadius: BorderRadius.circular(6)),
+              /* BoxConstraints para definir altura e largura */
+              constraints: BoxConstraints(
+                minHeight: 12,
+                minWidth: 12,
+              ),
+              child: Text(
+                /* Aqui vai listar a qtd de items no carrinho */
+                '${storeFoods.cartItems.length.toString()}',
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
+              )),
+        )
+      ],
     );
   }
 }
