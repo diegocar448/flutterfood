@@ -4,7 +4,7 @@ import './screens/speech/speech_page.dart';
 import './screens/auth/register_page.dart';
 import './screens/auth/login_page.dart';
 import './screens/restaurants/restaurants_page.dart';
-import './screens/foods/food_page.dart';
+import 'screens/foods/foods_page.dart';
 import './screens/carts/cart_page.dart';
 import './screens/orders/order_page.dart';
 import './screens/orders/evaluation_order.dart';

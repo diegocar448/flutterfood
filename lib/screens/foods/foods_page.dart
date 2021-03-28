@@ -4,7 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import '../../models/Category.dart';
 import '../../models/Food.dart';
 import '../../models/Restaurant.dart';
-import './widgets/Categories.dart';
+import 'widgets/Categories.dart';
 import '../../widgets/food-card.dart';
 import '../../widgets/flutter_bottom_navigator.dart';
 import '../../stores/foods.store.dart';
@@ -110,15 +110,7 @@ class _FoodsScreenState extends State<FoodsScreen> {
             itemBuilder: (context, index) {
               final Food food = storeFoods.foods[index];
 
-              return FoodCard(
-                identify: food.identify,
-                description: food.description,
-                image: food.image,
-                price: food.price,
-                title: food.title,
-                /* Aqui deixo como false pq quero que exiba a lista do carrinho */
-                notShowIconCart: false,
-              );
+              return FoodCard(food: food);
             }));
   }
 }

@@ -16,6 +16,9 @@ abstract class _FoodsStoreBase with Store {
   ObservableList<Food> foods = ObservableList<Food>();
 
   @observable
+  ObservableList<Food> cartItems = ObservableList<Food>();
+
+  @observable
   bool isLoading = false;
 
   @action
@@ -53,4 +56,27 @@ abstract class _FoodsStoreBase with Store {
 
     response.map((food) => addFood(Food.fromJson(food))).toList();
   }
+
+  /* 
+  Métodos de Cart
+   */
+
+  @action
+  void addFoodCart(Food food) {
+    cartItems.add(food);
+  }
+
+  @action
+  void removeFoodCart(Food food) {
+    cartItems.remove(food);
+  }
+
+  @action
+  void clearCart() {
+    cartItems.clear();
+  }
+
+  /* Métodos para indicar se têm ou não produto no carrinho */
+  @action
+  bool inFoodCart(Food food) => cartItems.contains(food);
 }

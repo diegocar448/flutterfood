@@ -1,24 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import '../models/Food.dart';
 
 class FoodCard extends StatelessWidget {
-  String identify;
-  String title;
-  String description;
-  String price;
-  String image;
   bool notShowIconCart;
+  Food food;
 
   /* Deixando fica obrigatório passar os parâmetros */
-  FoodCard({
-    this.identify,
-    this.title,
-    this.description,
-    this.price,
-    this.image,
-    this.notShowIconCart,
-  });
+  /* Aqui deixo this.notShowIconCart como false pq quero que exiba a lista do carrinho */
+  FoodCard({this.notShowIconCart = false, this.food});
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +50,8 @@ class FoodCard extends StatelessWidget {
           //child: Image.asset('assets/images/IconeFlutterFood.png')),
           /* Aqui vamos usar a lib cached_network_image */
           child: CachedNetworkImage(
-            imageUrl: image != ''
-                ? image
+            imageUrl: food.image != ''
+                ? food.image
                 : 'https://florinafood.gr/imgs/logos/fresh.png',
             placeholder: (context, url) => Container(
               height: 80,
@@ -84,21 +75,21 @@ class FoodCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(title,
+        Text(food.title,
             style: TextStyle(
               color: Colors.black54,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             )),
         Container(height: 4),
-        Text(description,
+        Text(food.description,
             style: TextStyle(
               color: Colors.black38,
               fontSize: 12,
               fontWeight: FontWeight.normal,
             )),
         Container(height: 4),
-        Text("R\$ $price",
+        Text("R\$ ${food.price}",
             style: TextStyle(
               color: Colors.black38,
               fontSize: 10,
