@@ -13,10 +13,13 @@ abstract class _FoodsStoreBase with Store {
   }
 
   @observable
-  ObservableList<Food> foods = ObservableList<Food>();  
+  ObservableList<Food> foods = ObservableList<Food>();
 
-  @observable  
+  @observable
   List<Map<String, dynamic>> cartItems = [];
+
+  @observable
+  double totalCart = 0;
 
   @observable
   bool isLoading = false;
@@ -64,14 +67,19 @@ abstract class _FoodsStoreBase with Store {
   @action
   void addFoodCart(Food food) {
     print('addFoodCart');
+
+    /* Se esse produto ja estiver no carrinho ele não vai incrementar */
+    if (inFoodCart(food)) {
+      return incrementFoodCart(food);
+    }
+
     /* Aqui adicionamos o produto no carrinho */
     cartItems.add({
-      'identify':food.identify,
-      'qty':1,
-      'product':food,
+      'identify': food.identify,
+      'qty': 1,
+      'product': food,
     });
-    /* Pegar a lista e inserir na propria lista (touch) */
-    foods = foods;
+    calcTotalCart();
   }
 
   @action
@@ -80,44 +88,76 @@ abstract class _FoodsStoreBase with Store {
     /* Aqui removemos o produto no carrinho, sempre verificando se é igual*/
     cartItems.removeWhere((element) => element['identify'] == food.identify);
     /* Pegar a lista e inserir na propria lista (touch) */
-    foods = foods;
+    calcTotalCart();
   }
 
   @action
   void clearCart() {
     print('clearCart');
     cartItems.clear();
-    /* Pegar a lista e inserir na propria lista (touch) */
-    foods = foods;
+
+    calcTotalCart();
   }
 
   /* Método de incrementar */
   @action
-  void incrementFoodCart(Food food){
-    /* encontrar a comida que vai incrementar */
-    final int index = cartItems.indeWhere((element) => element['identify'] == food.identify);
+  void incrementFoodCart(Food food) {
+    /* encontrar a comida que vai incrementar | recupera o indice do item*/
+    final int index =
+        cartItems.indexWhere((element) => element['identify'] == food.identify);
 
     /* Acessar a quantidade desse produto */
-    cartItems[index]['qtd'] = cartItems[index]['qtd'] + 1
+    cartItems[index]['qty'] = cartItems[index]['qty'] + 1;
+
+    calcTotalCart();
   }
 
   /* Método de decrementar */
   @action
-  void decrementFoodCart(Food food){
-    /* encontrar a comida que vai decrementar */
-    final int index = cartItems.indeWhere((element) => element['identify'] == food.identify);
+  void decrementFoodCart(Food food) {
+    /* encontrar a comida que vai decrementar | recupera o indice do item*/
+    final int index =
+        cartItems.indexWhere((element) => element['identify'] == food.identify);
 
     /* Acessar a quantidade desse produto */
-    cartItems[index]['qtd'] = cartItems[index]['qtd'] - 1
+    cartItems[index]['qty'] = cartItems[index]['qty'] - 1;
 
     /* se for 0 remove o produto do carrinho */
-    if(cartItems[index]['qtd'] == 0)
-    {
-      removeFoodCart();
+    if (cartItems[index]['qty'] == 0) {
+      /* Adicionamos o return para encerrar aqui (Não tem necessidade de rodar o calcTotalCart() novamente) */
+      return removeFoodCart(food);
     }
+
+    calcTotalCart();
   }
 
   /* Métodos para indicar se têm ou não produto no carrinho */
   @action
-  bool inFoodCart(Food food) => cartItems.contains(food);
+  bool inFoodCart(Food food) {
+    /* Aqui eu recupero o indice do item*/
+    final int index =
+        cartItems.indexWhere((element) => element['identify'] == food.identify);
+
+    return index != -1;
+  }
+
+  /* Calcular o total do carrinho */
+  @action
+  double calcTotalCart() {
+    double total = 0;
+
+    /* Pegar o valor do produto multiplicar pela qtd e somar com o total do carrinho */
+    cartItems.map((element) =>
+        total += element['qty'] * double.parse(element['product'].price));
+
+    /* Total cart recebe o valor atualizado */
+    totalCart = total;
+
+    /* Pegar a lista e inserir na propria lista (touch) (Forçando a atualização)*/
+    foods = foods;
+    /* Fazer touch em cartItems tbm */
+    cartItems = cartItems;
+
+    return total;
+  }
 }

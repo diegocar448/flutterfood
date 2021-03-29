@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/Category.dart';
 import '../../models/Food.dart';
 import '../../models/Restaurant.dart';
 import 'widgets/Categories.dart';

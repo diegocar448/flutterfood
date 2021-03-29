@@ -119,7 +119,10 @@ class FoodCard extends StatelessWidget {
                   GestureDetector(
                       /* Qdo clicar aqui ele remove o item do carrinho */
                       onTap: () => storeFoods.removeFoodCart(food),
-                      child: Icon(Icons.remove_shopping_cart))
+                      child: Icon(
+                        Icons.remove_shopping_cart,
+                        color: Colors.red,
+                      ))
                   : GestureDetector(
                       onTap: () => storeFoods.addFoodCart(food),
                       child: Icon(Icons.shopping_cart),
