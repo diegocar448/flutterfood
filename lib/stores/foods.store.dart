@@ -13,10 +13,10 @@ abstract class _FoodsStoreBase with Store {
   }
 
   @observable
-  ObservableList<Food> foods = ObservableList<Food>();
+  ObservableList<Food> foods = ObservableList<Food>();  
 
-  @observable
-  ObservableList<Food> cartItems = ObservableList<Food>();
+  @observable  
+  List<Map<String, dynamic>> cartItems = [];
 
   @observable
   bool isLoading = false;
@@ -64,7 +64,12 @@ abstract class _FoodsStoreBase with Store {
   @action
   void addFoodCart(Food food) {
     print('addFoodCart');
-    cartItems.add(food);
+    /* Aqui adicionamos o produto no carrinho */
+    cartItems.add({
+      'identify':food.identify,
+      'qty':1,
+      'product':food,
+    });
     /* Pegar a lista e inserir na propria lista (touch) */
     foods = foods;
   }
@@ -72,7 +77,8 @@ abstract class _FoodsStoreBase with Store {
   @action
   void removeFoodCart(Food food) {
     print('removeFoodCart');
-    cartItems.remove(food);
+    /* Aqui removemos o produto no carrinho, sempre verificando se é igual*/
+    cartItems.removeWhere((element) => element['identify'] == food.identify);
     /* Pegar a lista e inserir na propria lista (touch) */
     foods = foods;
   }
@@ -83,6 +89,32 @@ abstract class _FoodsStoreBase with Store {
     cartItems.clear();
     /* Pegar a lista e inserir na propria lista (touch) */
     foods = foods;
+  }
+
+  /* Método de incrementar */
+  @action
+  void incrementFoodCart(Food food){
+    /* encontrar a comida que vai incrementar */
+    final int index = cartItems.indeWhere((element) => element['identify'] == food.identify);
+
+    /* Acessar a quantidade desse produto */
+    cartItems[index]['qtd'] = cartItems[index]['qtd'] + 1
+  }
+
+  /* Método de decrementar */
+  @action
+  void decrementFoodCart(Food food){
+    /* encontrar a comida que vai decrementar */
+    final int index = cartItems.indeWhere((element) => element['identify'] == food.identify);
+
+    /* Acessar a quantidade desse produto */
+    cartItems[index]['qtd'] = cartItems[index]['qtd'] - 1
+
+    /* se for 0 remove o produto do carrinho */
+    if(cartItems[index]['qtd'] == 0)
+    {
+      removeFoodCart();
+    }
   }
 
   /* Métodos para indicar se têm ou não produto no carrinho */
