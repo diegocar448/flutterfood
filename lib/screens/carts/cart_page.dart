@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 import '../../widgets/flutter_bottom_navigator.dart';
+import '../../models/Food.dart';
+import '../../stores/foods.store.dart';
 import '../../widgets/show_image_cached_network.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({Key key}) : super(key: key);
+  FoodsStore _foodsStore;
 
   /* Aqui nó vamos construir nosso carrinho */
   @override
   Widget build(BuildContext context) {
+    _foodsStore = Provider.of<FoodsStore>(context);
+
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -33,24 +39,35 @@ class CartScreen extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.all(16),
-      child: Text("Total (3) Items", style: TextStyle(color: Colors.black)),
+    /* Adicionamos um Observer para ficar monitorando as alterações */
+    return Observer(
+      builder: (context) => Container(
+        alignment: Alignment.topLeft,
+        margin: EdgeInsets.all(16),
+        child: Text("Total (${_foodsStore.cartItems.length}) Items",
+            style: TextStyle(color: Colors.black)),
+      ),
     );
   }
 
   Widget _buildCartList(context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      primary: false,
-      itemCount: 6,
-      itemBuilder: (context, index) => _buildCartItem(context),
+    return Observer(
+      builder: (context) => ListView.builder(
+        shrinkWrap: true,
+        primary: false,
+        itemCount: _foodsStore.cartItems.length,
+        itemBuilder: (context, index) {
+          final Map<String, dynamic> itemCart = _foodsStore.cartItems[index];
+          return _buildCartItem(itemCart, context);
+        },
+      ),
     );
   }
 
   /* Aqui construimos os items  da lista */
-  Widget _buildCartItem(context) {
+  Widget _buildCartItem(Map<String, dynamic> itemCart, context) {
+    final Food food = itemCart['product'];
+
     return Stack(
       children: <Widget>[
         Container(
@@ -64,9 +81,10 @@ class CartScreen extends StatelessWidget {
             padding: EdgeInsets.all(2),
             child: Row(
               children: <Widget>[
-                ShowImageCachedNetwork(
-                    'https://florinafood.gr/imgs/logos/fresh.png'),
-                _showDetailItemCart(context),
+                ShowImageCachedNetwork(food.image != null
+                    ? food.image
+                    : 'https://florinafood.gr/imgs/logos/fresh.png'),
+                _showDetailItemCart(food, itemCart, context),
               ],
             ),
           ),
@@ -74,6 +92,7 @@ class CartScreen extends StatelessWidget {
         Align(
           alignment: Alignment.topRight,
           child: GestureDetector(
+            onTap: () => _foodsStore.removeFoodCart(food),
             child: Container(
               height: 24,
               width: 24,
@@ -93,7 +112,8 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _showDetailItemCart(context) {
+  Widget _showDetailItemCart(
+      Food food, Map<String, dynamic> itemCart, context) {
     return Expanded(
         child: Container(
             padding: EdgeInsets.only(top: 4, right: 4, left: 4),
@@ -104,7 +124,7 @@ class CartScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "PIZZA HUT",
+                    food.title,
                     maxLines: 2,
                     style: TextStyle(
                         fontSize: 14, color: Theme.of(context).primaryColor),
@@ -117,23 +137,30 @@ class CartScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                         Text(
-                          "R\$ 399,00",
+                          "R\$ ${food.price}",
                           style: TextStyle(color: Colors.green),
                         ),
                         Container(height: 6),
                         Container(
                           child: Row(children: <Widget>[
-                            Icon(Icons.remove,
-                                size: 24, color: Colors.grey.shade700),
+                            GestureDetector(
+                              onDoubleTap: () =>
+                                  _foodsStore.decrementFoodCart(food),
+                              child: Icon(Icons.remove,
+                                  size: 24, color: Colors.grey.shade700),
+                            ),
                             Container(
                               padding: EdgeInsets.only(
                                   top: 4, bottom: 4, left: 12, right: 12),
                               color: Theme.of(context).primaryColor,
-                              child: Text('2',
+                              child: Text(itemCart['qty'].toString(),
                                   style: TextStyle(color: Colors.white)),
                             ),
-                            Icon(Icons.add,
-                                size: 24, color: Colors.grey.shade700)
+                            GestureDetector(
+                              onTap: () => _foodsStore.incrementFoodCart(food),
+                              child: Icon(Icons.add,
+                                  size: 24, color: Colors.grey.shade700),
+                            ),
                           ]),
                         )
                       ]))
@@ -144,7 +171,7 @@ class CartScreen extends StatelessWidget {
   Widget _buildTextTotalCart(context) {
     return Container(
         margin: EdgeInsets.only(left: 10, right: 10, top: 26, bottom: 16),
-        child: Text("Preço Total: R\$ 499,00",
+        child: Text("Preço Total: R\$ ${_foodsStore.totalCart}",
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 18,

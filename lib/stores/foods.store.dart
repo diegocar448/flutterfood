@@ -115,6 +115,7 @@ abstract class _FoodsStoreBase with Store {
   /* Método de decrementar */
   @action
   void decrementFoodCart(Food food) {
+    print("decrementando");
     /* encontrar a comida que vai decrementar | recupera o indice do item*/
     final int index =
         cartItems.indexWhere((element) => element['identify'] == food.identify);
