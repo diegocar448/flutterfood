@@ -149,8 +149,7 @@ abstract class _FoodsStoreBase with Store {
   /* Calcular o total do carrinho */
   @action
   double calcTotalCart() {
-    print("calcTotalCart");
-    //print(cartItems);
+    print(calcTotalCart);
     double total = 0;
 
     /* Pegar o valor do produto multiplicar pela qtd e somar com o total do carrinho */
@@ -158,7 +157,7 @@ abstract class _FoodsStoreBase with Store {
         .map((element) =>
             total += element['qty'] * double.parse(element['product'].price))
         .toList();
-
+    print(total);
     /* Total cart recebe o valor atualizado */
     totalCart = total;
 
@@ -167,7 +166,6 @@ abstract class _FoodsStoreBase with Store {
     /* Fazer touch em cartItems tbm */
     cartItems = cartItems;
 
-    //print(cartItems[0]['qty'].price);
     return total;
   }
 }
