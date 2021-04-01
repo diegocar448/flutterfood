@@ -22,9 +22,6 @@ abstract class _FoodsStoreBase with Store {
   double totalCart = 0;
 
   @observable
-  double totalCart2 = 0;
-
-  @observable
   bool isLoading = false;
 
   @action
@@ -164,7 +161,6 @@ abstract class _FoodsStoreBase with Store {
 
     /* Total cart recebe o valor atualizado */
     totalCart = total;
-    totalCart2 = total;
 
     /* Pegar a lista e inserir na propria lista (touch) (Forçando a atualização)*/
     foods = foods;
