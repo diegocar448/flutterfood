@@ -3,9 +3,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/flutter_bottom_navigator.dart';
+import '../../widgets/show_image_cached_network.dart';
 import '../../models/Food.dart';
 import '../../stores/foods.store.dart';
-import '../../widgets/show_image_cached_network.dart';
 
 class CartScreen extends StatelessWidget {
   FoodsStore _foodsStore;
@@ -44,7 +44,7 @@ class CartScreen extends StatelessWidget {
       builder: (context) => Container(
         alignment: Alignment.topLeft,
         margin: EdgeInsets.all(16),
-        child: Text("Total (${_foodsStore.cartItems.length}) Items",
+        child: Text("Total (${_foodsStore.cartItems.length})",
             style: TextStyle(color: Colors.black)),
       ),
     );
@@ -129,6 +129,7 @@ class CartScreen extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 14, color: Theme.of(context).primaryColor),
                   ),
+                  Container(height: 6),
                   Container(
                       //color: Colors.black,
 
@@ -170,9 +171,10 @@ class CartScreen extends StatelessWidget {
   Widget _buildTextTotalCart() {
     return Observer(
       builder: (context) => Container(
-        margin: EdgeInsets.only(left: 10, right: 10, top: 26, bottom: 16),
+        //margin: EdgeInsets.only(left: 10, right: 10, top: 26, bottom: 16),
+        margin: EdgeInsets.all(10),
         child: Text(
-          "Preço Total: R\$ ${_foodsStore.totalCart}",
+          "(${_foodsStore.cartItems.length}) Total: ${_foodsStore.totalCart} ",
           style: TextStyle(
               color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
