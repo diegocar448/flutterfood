@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import './routes.dart';
 import './constants/app_theme.dart';
 import './stores/categories.store.dart';
+import './stores/restaurant.store.dart';
 
 void main() => runApp(FlutterFoodApp());
 
@@ -24,6 +25,10 @@ class FlutterFoodApp extends StatelessWidget {
         Provider<CategoriesStore>(
           /* Aqui crio uma instancia que podera ser usada em qualquer parte do nosso App */
           create: (_) => CategoriesStore(),
+        ),
+        Provider<RestaurantsStore>(
+          /* Aqui crio uma instancia que podera ser usada em qualquer parte do nosso App */
+          create: (_) => RestaurantsStore(),
         )
       ],
       child: MaterialApp(

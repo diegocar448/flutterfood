@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutterfood/stores/restaurant.store.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/Food.dart';
@@ -28,6 +29,7 @@ class _FoodsScreenState extends State<FoodsScreen> {
   FoodsStore storeFoods;
   /* Aqui ja vai carregar as categorias da company especifica */
   CategoriesStore storeCategories;
+  RestaurantsStore restaurantsStore;
 
   /* Aqui conseguimos retornar todos os dados do restaurantes */
   @override
@@ -37,16 +39,18 @@ class _FoodsScreenState extends State<FoodsScreen> {
     /* Aqui instanciamos os nossos providers */
     storeFoods = Provider.of<FoodsStore>(context);
     storeCategories = Provider.of<CategoriesStore>(context);
+    restaurantsStore = Provider.of<RestaurantsStore>(context);
 
     RouteSettings settings = ModalRoute.of(context).settings;
     _restaurant = settings.arguments;
+
+    restaurantsStore.setRestaurant(_restaurant);
 
     /* 
       Antes de fazer o carregamento das comidas, faremos aqui, o carregamento de nossas categorias,
       passando o token == _restaurant.uuid
     */
     storeCategories.getCategories(_restaurant.uuid);
-    
 
     /* passando o token (uuid) */
     storeFoods.getFoods(_restaurant.uuid);

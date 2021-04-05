@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../widgets/flutter_bottom_navigator.dart';
 import '../../widgets/show_image_cached_network.dart';
 import '../../models/Food.dart';
 import '../../stores/foods.store.dart';
+import '../../stores/restaurant.store.dart';
 
 class CartScreen extends StatelessWidget {
   FoodsStore _foodsStore;
+  RestaurantsStore _restaurantsStore;
 
   /* Aqui nó vamos construir nosso carrinho */
   @override
   Widget build(BuildContext context) {
     _foodsStore = Provider.of<FoodsStore>(context);
+    /* Aqui ja temos todos os dados do restaurants que preciso */
+    _restaurantsStore = Provider.of<RestaurantsStore>(context);
+
+    final String titlePage = _restaurantsStore.restaurant != null
+        ? "Carrinho - ${_restaurantsStore.restaurant.name}"
+        : 'Carrinho';
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: Text("Carrinho"),
+        title: Text(titlePage),
         centerTitle: true,
       ),
       body: _bodyContentCart(context),

@@ -39,6 +39,21 @@ mixin _$FoodsStore on _FoodsStoreBase, Store {
     });
   }
 
+  final _$totalCartAtom = Atom(name: '_FoodsStoreBase.totalCart');
+
+  @override
+  double get totalCart {
+    _$totalCartAtom.reportRead();
+    return super.totalCart;
+  }
+
+  @override
+  set totalCart(double value) {
+    _$totalCartAtom.reportWrite(value, super.totalCart, () {
+      super.totalCart = value;
+    });
+  }
+
   final _$isLoadingAtom = Atom(name: '_FoodsStoreBase.isLoading');
 
   @override
@@ -153,6 +168,28 @@ mixin _$FoodsStore on _FoodsStoreBase, Store {
   }
 
   @override
+  void incrementFoodCart(Food food) {
+    final _$actionInfo = _$_FoodsStoreBaseActionController.startAction(
+        name: '_FoodsStoreBase.incrementFoodCart');
+    try {
+      return super.incrementFoodCart(food);
+    } finally {
+      _$_FoodsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void decrementFoodCart(Food food) {
+    final _$actionInfo = _$_FoodsStoreBaseActionController.startAction(
+        name: '_FoodsStoreBase.decrementFoodCart');
+    try {
+      return super.decrementFoodCart(food);
+    } finally {
+      _$_FoodsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   bool inFoodCart(Food food) {
     final _$actionInfo = _$_FoodsStoreBaseActionController.startAction(
         name: '_FoodsStoreBase.inFoodCart');
@@ -164,10 +201,22 @@ mixin _$FoodsStore on _FoodsStoreBase, Store {
   }
 
   @override
+  double calcTotalCart() {
+    final _$actionInfo = _$_FoodsStoreBaseActionController.startAction(
+        name: '_FoodsStoreBase.calcTotalCart');
+    try {
+      return super.calcTotalCart();
+    } finally {
+      _$_FoodsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 foods: ${foods},
 cartItems: ${cartItems},
+totalCart: ${totalCart},
 isLoading: ${isLoading}
     ''';
   }
