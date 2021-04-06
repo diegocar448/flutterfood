@@ -40,6 +40,21 @@ mixin _$CategoriesStore on _CategoriesStoreBase, Store {
     });
   }
 
+  final _$filterChangedAtom = Atom(name: '_CategoriesStoreBase.filterChanged');
+
+  @override
+  bool get filterChanged {
+    _$filterChangedAtom.reportRead();
+    return super.filterChanged;
+  }
+
+  @override
+  set filterChanged(bool value) {
+    _$filterChangedAtom.reportWrite(value, super.filterChanged, () {
+      super.filterChanged = value;
+    });
+  }
+
   final _$isLoadingAtom = Atom(name: '_CategoriesStoreBase.isLoading');
 
   @override
@@ -160,6 +175,7 @@ mixin _$CategoriesStore on _CategoriesStoreBase, Store {
     return '''
 categories: ${categories},
 filtersCategory: ${filtersCategory},
+filterChanged: ${filterChanged},
 isLoading: ${isLoading}
     ''';
   }

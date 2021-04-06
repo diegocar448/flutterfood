@@ -19,6 +19,9 @@ abstract class _CategoriesStoreBase with Store {
   List<String> filtersCategory = [];
 
   @observable
+  bool filterChanged = false;
+
+  @observable
   bool isLoading = false;
 
   /* Essa action fará o toggle de isLoading */
@@ -50,6 +53,8 @@ abstract class _CategoriesStoreBase with Store {
 
     /* Para ser observado no nosso screen */
     categories = categories;
+    /* touch para inverter o valor ex: de false para true */
+    filterChanged = !filterChanged;
   }
 
   /* Remove filtro */
@@ -59,6 +64,8 @@ abstract class _CategoriesStoreBase with Store {
 
     /* Para ser observado no nosso screen */
     categories = categories;
+    /* touch para inverter o valor ex: de false para true */
+    filterChanged = !filterChanged;
   }
 
   /* Verificar se existe filtro */
@@ -74,6 +81,8 @@ abstract class _CategoriesStoreBase with Store {
 
     /* Para ser observado no nosso screen */
     categories = categories;
+    /* touch para inverter o valor ex: de false para true */
+    filterChanged = !filterChanged;
   }
 
   /* Vai pegar os dados do categoryRepository e devolve-los */
@@ -83,6 +92,8 @@ abstract class _CategoriesStoreBase with Store {
 
     /* Assim que recarregar a nossa getCategories vamos limpar os dados anteriores antes de inserir os novos dados */
     clearCategory();
+    /* Antes da requisição limpamos os filtros */
+    clearFilter();
 
     /* Aqui nós iremos acessar o repository que faz a requisição para a nossa API laravel */
     final response = await repository.getCategories(tokenCompany);
