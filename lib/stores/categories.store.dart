@@ -10,8 +10,13 @@ class CategoriesStore = _CategoriesStoreBase with _$CategoriesStore;
 abstract class _CategoriesStoreBase with Store {
   CategoryRepository repository = new CategoryRepository();
 
+  /* Será observado nas mudanças em nosso screens */
   @observable
   ObservableList<Category> categories = ObservableList<Category>();
+
+  /* Criamos aqui o nosso observable para ter a lista com os filtros */
+  @observable
+  List<String> filtersCategory = [];
 
   @observable
   bool isLoading = false;
@@ -36,6 +41,39 @@ abstract class _CategoriesStoreBase with Store {
   @action
   void clearCategory() {
     categories.clear();
+  }
+
+  /* Adiciona filtro */
+  @action
+  void addFilter(String identify) {
+    filtersCategory.add(identify);
+
+    /* Para ser observado no nosso screen */
+    categories = categories;
+  }
+
+  /* Remove filtro */
+  @action
+  void removeFilter(String identify) {
+    filtersCategory.remove(identify);
+
+    /* Para ser observado no nosso screen */
+    categories = categories;
+  }
+
+  /* Verificar se existe filtro */
+  @action
+  bool inFilter(String identify) {
+    return filtersCategory.contains(identify);
+  }
+
+  /* Um limpar filter mais generico */
+  @action
+  void clearFilter() {
+    filtersCategory.clear();
+
+    /* Para ser observado no nosso screen */
+    categories = categories;
   }
 
   /* Vai pegar os dados do categoryRepository e devolve-los */

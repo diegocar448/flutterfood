@@ -48,14 +48,16 @@ abstract class _FoodsStoreBase with Store {
   }
 
   @action
-  Future getFoods(String tokenCompany) async {
+  Future getFoods(String tokenCompany, {List<String> categoriesFilter}) async {
     clearFoods();
     clearCart();
 
     /* Inicia preloader CircularProgressIndicator */
     setLoading(true);
 
-    final response = await _repository.getFoods(tokenCompany);
+    /* como o parâmetro categoriesFilter é opcional passamos nesse formato  filterCategories: categoriesFilter*/
+    final response = await _repository.getFoods(tokenCompany,
+        filterCategories: categoriesFilter);
 
     /* Finaliza preloader CircularProgressIndicator */
     setLoading(false);
