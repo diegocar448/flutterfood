@@ -1,5 +1,6 @@
 import 'package:flutterfood/models/Restaurant.dart';
 import 'package:mobx/mobx.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import '../models/Restaurant.dart';
 
 part 'restaurant.store.g.dart';

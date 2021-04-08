@@ -13,7 +13,7 @@ class RestaurantCard extends StatelessWidget {
     /* GestureDetector para quando clicar na imagem ele acessar a proxima tela */
     return GestureDetector(
       onTap: () {
-        print(restaurant.name);
+        //print(restaurant.name);
         Navigator.pushNamed(context, '/foods', arguments: restaurant);
       },
       child: Container(

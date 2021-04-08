@@ -1,5 +1,6 @@
 import '../data/network/repositories/food_repository.dart';
 import 'package:mobx/mobx.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import '../models/Food.dart';
 part 'foods.store.g.dart';
 

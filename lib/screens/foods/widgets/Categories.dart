@@ -26,9 +26,18 @@ class Categories extends StatelessWidget {
       child: ListView.builder(
         /* alinha na horizontal */
         scrollDirection: Axis.horizontal,
-        itemCount: _categories.length,
+        /* Aqui será a listagem da (todas cat.) + categorias do loop */
+        itemCount: _categories.length + 1,
         itemBuilder: (context, index) {
-          final Category category = _categories[index];
+          if (index == 0) {
+            /* Criamos o primeiro objeto de Category todasCate. */
+            final Category category =
+                Category.fromJson({'identify': 'all', 'name': 'Todas'});
+            return _buildCategory(category);
+          }
+
+          /* aqui pegará o item da segunda posição para frente */
+          final Category category = _categories[index - 1];
           /* aqui vamos criar outro widget para modularizar melhor */
           return _buildCategory(category);
         },

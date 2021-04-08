@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../models/Category.dart';
 import '../data/network/repositories/category_repository.dart';
@@ -49,7 +50,11 @@ abstract class _CategoriesStoreBase with Store {
   /* Adiciona filtro */
   @action
   void addFilter(String identify) {
-    filtersCategory.add(identify);
+    if (identify == 'all') {
+      return clearFilter();
+    } else {
+      filtersCategory.add(identify);
+    }
 
     /* Para ser observado no nosso screen */
     categories = categories;
@@ -60,7 +65,9 @@ abstract class _CategoriesStoreBase with Store {
   /* Remove filtro */
   @action
   void removeFilter(String identify) {
-    filtersCategory.remove(identify);
+    if (identify != 'all') {
+      filtersCategory.remove(identify);
+    }
 
     /* Para ser observado no nosso screen */
     categories = categories;
@@ -71,7 +78,8 @@ abstract class _CategoriesStoreBase with Store {
   /* Verificar se existe filtro */
   @action
   bool inFilter(String identify) {
-    return filtersCategory.contains(identify);
+    return (identify == 'all' && filtersCategory.length == 0) ||
+        filtersCategory.contains(identify);
   }
 
   /* Um limpar filter mais generico */
