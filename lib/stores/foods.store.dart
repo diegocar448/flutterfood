@@ -59,7 +59,7 @@ abstract class _FoodsStoreBase with Store {
     /* como o parâmetro categoriesFilter é opcional passamos nesse formato  filterCategories: categoriesFilter*/
     final response = await _repository.getFoods(tokenCompany,
         filterCategories: categoriesFilter);
-
+    //print(response);
     /* Finaliza preloader CircularProgressIndicator */
     setLoading(false);
 
