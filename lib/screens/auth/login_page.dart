@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutterfood/screens/auth/register_page.dart';
 import 'package:flutterfood/screens/auth/widgets/heading_auth.dart';
+import '../../stores/auth.store.dart';
 
 class LoginScreen extends StatelessWidget {
   double _deviceWidth;
   double _deviceHeight;
 
+  AuthStore _authStore;
+  /* propriedade para manipular as informações dos nossos widget */
+  TextEditingController _email = new TextEditingController();
+  TextEditingController _password = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    _authStore = Provider.of<AuthStore>(context);
+
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
     _deviceWidth = MediaQuery.of(context).size.width;
@@ -22,7 +32,11 @@ class LoginScreen extends StatelessWidget {
         1º SingleChildScrollView cria um scroll impedindo quebra do layout 
         2º Passamos o context em _loginPageUI para que possa ser usado pelas widgets filhas
       */
-      body: SingleChildScrollView(child: _loginPageUI(context)),
+      body: SingleChildScrollView(
+        child: Observer(
+          builder: (context) => _loginPageUI(context),
+        ),
+      ),
     );
   }
 
@@ -69,6 +83,7 @@ class LoginScreen extends StatelessWidget {
   Widget _emailTextField(context) {
     /* Usaremos o TextFormField por ele ter varios recursos relacionados a validação */
     return TextFormField(
+      controller: _email,
       autocorrect: false,
       autofocus: true,
       style: TextStyle(color: Theme.of(context).primaryColor),
@@ -90,6 +105,7 @@ class LoginScreen extends StatelessWidget {
   Widget _passwordTextField(context) {
     /* Usaremos o TextFormField por ele ter varios recursos relacionados a validação */
     return TextFormField(
+      controller: _password,
       autocorrect: false,
       autofocus: true,
       obscureText: true,
@@ -112,11 +128,12 @@ class LoginScreen extends StatelessWidget {
     return Container(
       width: _deviceWidth,
       child: MaterialButton(
-        onPressed: () {
-          Navigator.pushReplacementNamed(context, '/restaurants');
-        },
+        onPressed: () => _authStore.isLoading ? null : auth(),
+        /* Ao pressionar aqui faz comunicação com mobx que faz com repository que faz para api */
+        /* Navigator.pushReplacementNamed(context, '/restaurants'); */
+
         color: Theme.of(context).primaryColor,
-        child: Text("LOGIN"),
+        child: Text(_authStore.isLoading ? 'Autenticando...' : "LOGIN"),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       ),
     );
@@ -137,5 +154,10 @@ class LoginScreen extends StatelessWidget {
           style:
               TextStyle(color: Theme.of(context).primaryColor, fontSize: 18.2),
         ));
+  }
+
+  /* Aqui vamos usar uma instancia do Mobx para fazer a autenticação*/
+  Future auth() async {
+    await _authStore.auth(_email.text, _password.text);
   }
 }
