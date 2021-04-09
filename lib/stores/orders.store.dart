@@ -1,14 +1,14 @@
 import 'package:flutterfood/data/network/repositories/food_repository.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import '../data/network/repositories/orders_repository.dart';
+import '../data/network/repositories/order_repository.dart';
 part 'orders.store.g.dart';
 
 class OrdersStore = _OrdersStoreBase with _$OrdersStore;
 
 abstract class _OrdersStoreBase with Store {
   /* Aqui ja podemos chamar os métodos de FoodRepository */
-  OrdersRepository _ordersRepository = OrdersRepository();
+  OrderRepository _orderRepository = OrderRepository();
 
   @observable
   bool isMakingOrder = false;
@@ -19,7 +19,7 @@ abstract class _OrdersStoreBase with Store {
     /* fazendo Order  */
     isMakingOrder = true;
 
-    await _ordersRepository.makeOrder(tokenCompany, foods, comment: comment);
+    await _orderRepository.makeOrder(tokenCompany, foods, comment: comment);
 
     /* Order ja feita  */
     isMakingOrder = false;
