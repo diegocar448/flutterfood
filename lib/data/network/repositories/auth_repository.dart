@@ -1,8 +1,7 @@
-import 'package:flutterfood/data/network/interceptors/dio_interceptor_auth.dart';
-
+import 'package:dio/dio.dart';
 import '../../../constants/api.dart';
-import '../interceptors/dio_interceptor_auth.dart';
 import '../dio_client.dart';
+import '../interceptors/dio_interceptor_auth.dart';
 
 class AuthRepository {
   Dio _dio = dioInterceptorAuth();
@@ -46,7 +45,7 @@ class AuthRepository {
   }
 
   Future getMe() async {
-    final response = await DioCliente().get('url/me');
+    final response = await DioClient().get('url/me');
 
     print(response);
   }

@@ -7,6 +7,7 @@ import './constants/app_theme.dart';
 import './stores/categories.store.dart';
 import './stores/restaurant.store.dart';
 import './stores/orders.store.dart';
+import './stores/auth.store.dart';
 
 void main() => runApp(FlutterFoodApp());
 
@@ -34,6 +35,10 @@ class FlutterFoodApp extends StatelessWidget {
         Provider<OrdersStore>(
           /* Aqui crio uma instancia que podera ser usada em qualquer parte do nosso App */
           create: (_) => OrdersStore(),
+        ),
+        Provider<AuthStore>(
+          /* Aqui crio uma instancia que podera ser usada em qualquer parte do nosso App */
+          create: (_) => AuthStore(),
         )
       ],
       child: MaterialApp(
