@@ -13,6 +13,8 @@ class RestaurantRepository {
   Future<List<Restaurant>> getRestaurants() async {
     final response = await _httpClient.get('$API_VERSION/tenants');
 
+    print(response);
+
     final List _restaurants = (response.data['data'] as List).map((restaurant) {
       return Restaurant.fromJson(restaurant);
     }).toList();

@@ -64,6 +64,8 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
 
     final restaurants = await RestaurantRepository().getRestaurants();
 
+    print(restaurants);
+
     setState(() {
       _restaurants.addAll(restaurants);
     });

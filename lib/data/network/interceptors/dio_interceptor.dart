@@ -23,8 +23,8 @@ Dio dioInterceptor() {
       }
 
       return options;
-      // Do something before request is sent
-      //return handler.next(options); //continue
     },
   ));
+
+  return dio;
 }
