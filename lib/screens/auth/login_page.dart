@@ -128,7 +128,7 @@ class LoginScreen extends StatelessWidget {
     return Container(
       width: _deviceWidth,
       child: MaterialButton(
-        onPressed: () => _authStore.isLoading ? null : auth(),
+        onPressed: () => _authStore.isLoading ? null : auth(context),
         /* Ao pressionar aqui faz comunicação com mobx que faz com repository que faz para api */
         /* Navigator.pushReplacementNamed(context, '/restaurants'); */
 
@@ -157,7 +157,10 @@ class LoginScreen extends StatelessWidget {
   }
 
   /* Aqui vamos usar uma instancia do Mobx para fazer a autenticação*/
-  Future auth() async {
+  Future auth(context) async {
     await _authStore.auth(_email.text, _password.text);
+
+    /* Após autenticar faremos um redirect */
+    Navigator.pushReplacementNamed(context, '/restaurants');
   }
 }
