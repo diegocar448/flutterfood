@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
-import 'package:flutterfood/screens/auth/login_page.dart';
 import 'package:flutterfood/screens/auth/widgets/heading_auth.dart';
+import './login_page.dart';
+import '../../stores/auth.store.dart';
 
 class RegisterScreen extends StatelessWidget {
   double _deviceWidth;
   double _deviceHeight;
 
+  AuthStore _authStore;
+  TextEditingController _name = TextEditingController();
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    _authStore = Provider.of<AuthStore>(context);
+
     _deviceWidth = MediaQuery.of(context).size.width;
     _deviceHeight = MediaQuery.of(context).size.height;
 
@@ -19,11 +29,15 @@ class RegisterScreen extends StatelessWidget {
         1º SingleChildScrollView cria um scroll impedindo quebra do layout 
         2º Passamos o context em _loginPageUI para que possa ser usado pelas widgets filhas
       */
-      body: SingleChildScrollView(child: _loginPageUI(context)),
+      body: SingleChildScrollView(
+        child: Observer(
+          builder: (context) => _registerUI(context),
+        ),
+      ),
     );
   }
 
-  Widget _loginPageUI(context) {
+  Widget _registerUI(context) {
     return Container(
       /* Criar calculo proporcional para não pegar toda tela */
       padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.10),
@@ -67,6 +81,7 @@ class RegisterScreen extends StatelessWidget {
   Widget _emailTextField(context) {
     /* Usaremos o TextFormField por ele ter varios recursos relacionados a validação */
     return TextFormField(
+      controller: _email,
       autocorrect: false,
       autofocus: false,
       style: TextStyle(color: Theme.of(context).primaryColor),
@@ -88,6 +103,7 @@ class RegisterScreen extends StatelessWidget {
   Widget _nameTextField(context) {
     /* Usaremos o TextFormField por ele ter varios recursos relacionados a validação */
     return TextFormField(
+      controller: _name,
       autocorrect: false,
       autofocus: true,
       style: TextStyle(color: Theme.of(context).primaryColor),
@@ -109,6 +125,7 @@ class RegisterScreen extends StatelessWidget {
   Widget _passwordTextField(context) {
     /* Usaremos o TextFormField por ele ter varios recursos relacionados a validação */
     return TextFormField(
+      controller: _password,
       autocorrect: false,
       autofocus: true,
       obscureText: true,
@@ -131,11 +148,9 @@ class RegisterScreen extends StatelessWidget {
     return Container(
       width: _deviceWidth,
       child: MaterialButton(
-        onPressed: () {
-          Navigator.pushReplacementNamed(context, '/restaurants');
-        },
+        onPressed: () => _authStore.isLoading ? null : register(context),
         color: Theme.of(context).primaryColor,
-        child: Text("CADASTRAR"),
+        child: Text(_authStore.isLoading ? 'Registrando...' : 'CADASTRAR'),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       ),
     );
@@ -160,5 +175,11 @@ class RegisterScreen extends StatelessWidget {
           style:
               TextStyle(color: Theme.of(context).primaryColor, fontSize: 18.2),
         ));
+  }
+
+  Future register(context) async {
+    await _authStore.register(_name.text, _email.text, _password.text);
+
+    Navigator.pushReplacementNamed(context, '/restaurants');
   }
 }
