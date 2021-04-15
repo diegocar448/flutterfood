@@ -36,10 +36,9 @@ class ProfileScreen extends StatelessWidget {
         Container(height: 10),
         Container(
           child: RaisedButton(
-              onPressed: () {
-                print("Logout");
-              },
-              child: Text("Sair"),
+              /* Aqui nós chamaos o metodo logout com a regra logo abaixo */
+              onPressed: () => _authStore.isLoading ? null : logout(context),
+              child: Text(_authStore.isLoading ? 'Saindo...' : "Sair"),
               elevation: 2.2,
               color: Colors.red,
               shape: RoundedRectangleBorder(
@@ -50,5 +49,12 @@ class ProfileScreen extends StatelessWidget {
         ),
       ],
     ));
+  }
+
+  /* Metodo q faz apenas a logica do onPressed de _buildProfileScreen*/
+  Future logout(context) async {
+    await _authStore.logout();
+
+    Navigator.pushReplacementNamed(context, "/login");
   }
 }

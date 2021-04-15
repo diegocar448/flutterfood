@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../dio_client.dart';
 import '../../../constants/api.dart';
 import '../dio_client.dart';
 import '../interceptors/dio_interceptor_auth.dart';
@@ -72,8 +73,20 @@ class AuthRepository {
     }
   }
 
+  Future logout() async {
+    await DioClient().post('auth/logout');
+
+    /* Aqui chamamos o deleteToken para limpar o nosso storage */
+    await deleteToken();
+  }
+
   /* Aqui vamos salvar o token após a autenticação */
   Future saveToken(String token) async {
     await storage.write(key: 'token_sanctum', value: token);
+  }
+
+  /* Aqui vamos remover o token do storage após fazer o logout */
+  Future deleteToken() async {
+    await storage.delete(key: 'token_sanctum');
   }
 }
