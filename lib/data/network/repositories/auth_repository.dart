@@ -3,7 +3,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../dio_client.dart';
 import '../../../constants/api.dart';
-import '../dio_client.dart';
 import '../interceptors/dio_interceptor_auth.dart';
 import '../../../models/User.dart';
 

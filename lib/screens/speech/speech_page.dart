@@ -72,7 +72,6 @@ class _SpeechScreenState extends State<SpeechScreen> {
 
     if (token != null) {
       final bool isAuthenticated = await _authStore.getMe();
-
       return isAuthenticated;
     }
 
