@@ -27,6 +27,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
     /* redirecionar para rota /login após 10 segundo como foi passando no metodo _checkAuth */
     _checkAuth().then((bool isAuthenticated) {
       if (isAuthenticated) {
+        print("PQP");
         Navigator.pushReplacementNamed(context, "/restaurants");
         return;
       }

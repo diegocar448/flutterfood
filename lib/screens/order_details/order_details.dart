@@ -14,7 +14,6 @@ class OrderDetailsScreen extends StatelessWidget {
       identify: 'Identificação 1',
       date: "30/02/2021",
       status: 'open',
-      table: 'Mesa 1',
       total: (90).toDouble(),
       comment: "Sem Cebola",
       foods: [
@@ -168,7 +167,7 @@ class OrderDetailsScreen extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "${evaluation.nameUser} - ",
+                  "${evaluation.user.name} - ",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),

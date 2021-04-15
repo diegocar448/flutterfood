@@ -26,6 +26,14 @@ class Order {
   });
 
   factory Order.fromJson(jsonData) {
+    /* Aqui vamos pegar e tratar o foods e o Evaluations para o formato correto a ser consumido no flutter */
+    List<Food> _foodsApi = (jsonData['products'] as List)
+        .map((food) => Food.fromJson(food))
+        .toList();
+    List<Evaluation> _evaluationsApi = (jsonData['evalutations'] as List)
+        .map((evaluation) => Evaluation.fromJson(evaluation))
+        .toList();
+
     return Order(
       identify: jsonData['identify'],
       date: jsonData['date'],
@@ -33,8 +41,8 @@ class Order {
       table: jsonData['table'],
       total: double.parse(jsonData['total']),
       comment: jsonData['comment'],
-      foods: jsonData['foods'],
-      evaluations: jsonData['evaluations'],
+      foods: _foodsApi,
+      evaluations: _evaluationsApi,
     );
   }
 

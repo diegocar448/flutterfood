@@ -1,20 +1,21 @@
 import 'dart:convert';
+import 'User.dart';
 
 class Evaluation {
-  String nameUser;
+  User user;
   String comment;
   double stars;
 
   /* Deixando fica obrigatório passar os parâmetros */
   Evaluation({
-    this.nameUser,
+    this.user,
     this.comment,
     this.stars,
   });
 
   factory Evaluation.fromJson(jsonData) {
     return Evaluation(
-      nameUser: jsonData['nameUser'],
+      user: User.fromJson(jsonData['client']),
       comment: jsonData['comment'],
       stars: double.parse(jsonData['stars']),
     );
@@ -22,7 +23,6 @@ class Evaluation {
 
   /* Aqui vamos pegar o objeto e retornar um JSON */
   toJson() {
-    return jsonEncode(
-        {'nameUser': nameUser, 'comment': comment, 'stars': stars});
+    return jsonEncode({'user': user, 'comment': comment, 'stars': stars});
   }
 }
