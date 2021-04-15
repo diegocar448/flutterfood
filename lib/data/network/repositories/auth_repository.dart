@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:device_info/device_info.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -13,10 +16,12 @@ class AuthRepository {
 
   Future auth(String email, String password) async {
     try {
+      String deviceName = await getIdentifyDevice();
+
       final response = await _dio.post('auth/token', data: {
         'email': email,
         'password': password,
-        'device_name': 'apenas_um_teste'
+        'device_name': deviceName,
       });
 
       print(response.data['token']);
@@ -87,5 +92,18 @@ class AuthRepository {
   /* Aqui vamos remover o token do storage após fazer o logout */
   Future deleteToken() async {
     await storage.delete(key: 'token_sanctum');
+  }
+
+  /* Função que vai verificar OS e model */
+  Future<String> getIdentifyDevice() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
+    if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      return iosInfo.utsname.machine;
+    } else {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      return androidInfo.model;
+    }
   }
 }
