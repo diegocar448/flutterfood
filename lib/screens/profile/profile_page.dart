@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../stores/auth.store.dart';
 import 'package:flutterfood/widgets/flutter_bottom_navigator.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key key}) : super(key: key);
+  AuthStore _authStore;
 
   @override
   Widget build(BuildContext context) {
+    _authStore = Provider.of(context);
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -23,13 +26,13 @@ class ProfileScreen extends StatelessWidget {
       /* Centralizando verticalmente */
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text("Diego Cardoso",
+        Text(_authStore.user.name,
             style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
                 fontSize: 22)),
         Container(height: 10),
-        Text("diegocar448@hotmail.com", style: TextStyle(color: Colors.black)),
+        Text(_authStore.user.email, style: TextStyle(color: Colors.black)),
         Container(height: 10),
         Container(
           child: RaisedButton(

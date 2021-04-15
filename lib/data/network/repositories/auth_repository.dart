@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../constants/api.dart';
 import '../dio_client.dart';
 import '../interceptors/dio_interceptor_auth.dart';
+import '../../../models/User.dart';
 
 class AuthRepository {
   Dio _dio = dioInterceptorAuth();
@@ -52,9 +53,23 @@ class AuthRepository {
   }
 
   Future getMe() async {
-    final response = await DioClient().get('url/me');
+    final String token = await storage.read(key: 'token_sanctum');
 
-    print(response);
+    if (token != null) {
+      _dio.options.headers['Authorization'] = 'Bearer ' + token;
+    }
+
+    try {
+      final response = await _dio.get('auth/me');
+
+      print(response.data);
+      return User.fromJson(response.data['data']);
+    } on DioError catch (e) {
+      print(e.toString());
+      print(e.response);
+      print(e.response.statusCode);
+      print(e.response.data);
+    }
   }
 
   /* Aqui vamos salvar o token após a autenticação */

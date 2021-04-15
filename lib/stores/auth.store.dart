@@ -2,6 +2,7 @@ import 'package:flutterfood/data/network/repositories/auth_repository.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import '../data/network/repositories/auth_repository.dart';
+import '../models/User.dart';
 part 'auth.store.g.dart';
 
 class AuthStore = _AuthStoreBase with _$AuthStore;
@@ -11,16 +12,20 @@ abstract class _AuthStoreBase with Store {
   AuthRepository _authRepository = AuthRepository();
 
   /* default false (mostra o usuario como não autenticado por default) */
+  //@observable
+  //bool isAuthenticated = false;
+
   @observable
-  bool isAuthenticated = false;
+  User user;
 
   /* preloader */
   @observable
   bool isLoading = false;
 
-  /* fazer o toggle do isAuthenticated */
+  /* Vamos user o observable user para identificar qualquer mudança do objeto user */
   @action
-  void setAuthenticated(bool value) => isAuthenticated = value;
+  void setUser(User value) => user = value;
+
   /* fazer o toggle do isLoading */
   @action
   void setLoading(bool value) => isLoading = value;
@@ -30,6 +35,9 @@ abstract class _AuthStoreBase with Store {
     setLoading(true);
 
     await _authRepository.auth(email, password);
+
+    /* Logo após a autenticação pegamos o dados do usuario autenticado */
+    await getMe();
 
     setLoading(false);
 
@@ -45,6 +53,16 @@ abstract class _AuthStoreBase with Store {
     await auth(email, password);
 
     setLoading(false);
+
+    return true;
+  }
+
+  @action
+  Future<bool> getMe() async {
+    /* Aqui atualizamos o nosso user */
+    User user = await _authRepository.getMe();
+
+    setUser(user);
 
     return true;
   }
