@@ -72,6 +72,5 @@ abstract class _AuthStoreBase with Store {
     setLoading(true);
     /* whenComplete é uma função nativa para executará após completar o metodo (logout) */
     await _authRepository.logout().whenComplete(() => setLoading(false));
-    ;
   }
 }
