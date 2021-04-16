@@ -24,6 +24,21 @@ mixin _$OrdersStore on _OrdersStoreBase, Store {
     });
   }
 
+  final _$ordersAtom = Atom(name: '_OrdersStoreBase.orders');
+
+  @override
+  ObservableList<Order> get orders {
+    _$ordersAtom.reportRead();
+    return super.orders;
+  }
+
+  @override
+  set orders(ObservableList<Order> value) {
+    _$ordersAtom.reportWrite(value, super.orders, () {
+      super.orders = value;
+    });
+  }
+
   final _$makeOrderAsyncAction = AsyncAction('_OrdersStoreBase.makeOrder');
 
   @override
@@ -34,10 +49,18 @@ mixin _$OrdersStore on _OrdersStoreBase, Store {
         .run(() => super.makeOrder(tokenCompany, foods, comment: comment));
   }
 
+  final _$getMyOrdersAsyncAction = AsyncAction('_OrdersStoreBase.getMyOrders');
+
+  @override
+  Future<dynamic> getMyOrders() {
+    return _$getMyOrdersAsyncAction.run(() => super.getMyOrders());
+  }
+
   @override
   String toString() {
     return '''
-isMakingOrder: ${isMakingOrder}
+isMakingOrder: ${isMakingOrder},
+orders: ${orders}
     ''';
   }
 }

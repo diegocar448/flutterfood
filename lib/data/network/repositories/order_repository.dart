@@ -20,4 +20,11 @@ class OrderRepository {
 
     return response;
   }
+
+  /* Método para buscar os pedidos do usuario authenticado */
+  Future<List<dynamic>> getMyOrders() async {
+    final response = await _httpClient.get("/auth/$API_VERSION/my-orders");
+
+    return (response.data['data'] as List).toList();
+  } 
 }
