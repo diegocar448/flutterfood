@@ -1,6 +1,6 @@
+import 'package:mobx/mobx.dart';
 import 'package:flutterfood/data/network/repositories/food_repository.dart';
 import '../models/Order.dart';
-import 'package:mobx/mobx.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import '../data/network/repositories/order_repository.dart';
 part 'orders.store.g.dart';
@@ -51,7 +51,7 @@ abstract class _OrdersStoreBase with Store {
 
     isLoading = true;
     final response = await _orderRepository.getMyOrders();
-    print(response);
+    //print(response);
 
     response.map((order) => add(Order.fromJson(order))).toList();
 
