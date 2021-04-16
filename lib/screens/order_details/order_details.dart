@@ -10,35 +10,14 @@ import '../../models/Evaluation.dart';
 import '../../widgets/food-card.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
-  Order _order = Order(
-      identify: 'Identificação 1',
-      date: "30/02/2021",
-      status: 'open',
-      total: (90).toDouble(),
-      comment: "Sem Cebola",
-      foods: [
-        new Food(
-            identify: 'Segunda Identificação',
-            image:
-                'https://i.pinimg.com/originals/90/4a/8a/904a8a938527c0570833047102744f99.jpg',
-            description: "Apenas um teste",
-            price: '12.2',
-            title: "Sanduiche"),
-        new Food(
-            identify: 'qwert',
-            image:
-                'https://i.pinimg.com/originals/90/4a/8a/904a8a938527c0570833047102744f99.jpg',
-            description: "Apenas um teste",
-            price: '14.4',
-            title: "Açai"),
-      ],
-      evaluations: [
-        /* Evaluation(comment: "Pedido muito bom", nameUser: "Diego", stars: 4),
-        Evaluation(comment: "Gostei muito bom", nameUser: "Etevaldo", stars: 5), */
-      ]);
+  Order _order;
 
   @override
   Widget build(BuildContext context) {
+    /* Aqui pegamos os dados da outra screen order_page.dart */
+    RouteSettings settings = ModalRoute.of(context).settings;
+    _order = settings.arguments;
+
     return Scaffold(
       appBar: AppBar(title: Text("Detalhes do Pedido"), centerTitle: true),
       backgroundColor: Theme.of(context).backgroundColor,
@@ -57,14 +36,16 @@ class OrderDetailsScreen extends StatelessWidget {
           _makeTextOrder("Data", _order.date),
           _makeTextOrder("Status", _order.status),
           _makeTextOrder("Total", _order.total.toString()),
-          _makeTextOrder("Comentário", _order.comment),
+          _order.comment != null
+              ? _makeTextOrder("Comentário", _order.comment)
+              : Container(),
           Container(height: 30),
           Text("Comidas",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 22,
                   fontWeight: FontWeight.bold)),
-          _buildFoodOrder(),
+          _buildFoodsOrder(),
           Container(height: 30),
           Text("Avaliações",
               style: TextStyle(
@@ -92,7 +73,7 @@ class OrderDetailsScreen extends StatelessWidget {
         ));
   }
 
-  Widget _buildFoodOrder() {
+  Widget _buildFoodsOrder() {
     return Container(
         padding: EdgeInsets.only(left: 10),
         child: ListView.builder(
