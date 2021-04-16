@@ -26,5 +26,5 @@ class OrderRepository {
     final response = await _httpClient.get("/auth/$API_VERSION/my-orders");
 
     return (response.data['data'] as List).toList();
-  } 
+  }
 }

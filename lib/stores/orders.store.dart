@@ -32,17 +32,15 @@ abstract class _OrdersStoreBase with Store {
     isMakingOrder = false;
   }
 
-  
   /* Add order */
   @action
-  void add(Order order){
-    orders.add(orders);
+  void add(Order order) {
+    orders.add(order);
   }
-
 
   /* clear orders */
   @action
-  void clear(){
+  void clear() {
     orders.clear();
   }
 
@@ -52,15 +50,11 @@ abstract class _OrdersStoreBase with Store {
     clear();
 
     isLoading = true;
-
     final response = await _orderRepository.getMyOrders();
+    print(response);
 
-    response
-      .map((order) => add(Order.fromJson(order)))
-      .toList();
+    response.map((order) => add(Order.fromJson(order))).toList();
 
     isLoading = false;
-
   }
-
 }

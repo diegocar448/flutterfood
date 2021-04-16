@@ -7,7 +7,6 @@ class Order {
   String identify;
   String date;
   String status;
-  String table;
   double total;
   String comment;
   List<Food> foods;
@@ -18,7 +17,6 @@ class Order {
     this.identify,
     this.date,
     this.status,
-    this.table,
     this.total,
     this.comment,
     this.foods,
@@ -38,8 +36,7 @@ class Order {
       identify: jsonData['identify'],
       date: jsonData['date'],
       status: jsonData['status'],
-      table: jsonData['table'],
-      total: double.parse(jsonData['total']),
+      total: double.parse(jsonData['total'].toString()),
       comment: jsonData['comment'],
       foods: _foodsApi,
       evaluations: _evaluationsApi,
@@ -52,7 +49,6 @@ class Order {
       'identify': identify,
       'date': date,
       'status': status,
-      'table': table,
       'total': total,
       'comment': comment,
       'evaluations': evaluations

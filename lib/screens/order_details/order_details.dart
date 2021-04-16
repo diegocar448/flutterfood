@@ -57,7 +57,6 @@ class OrderDetailsScreen extends StatelessWidget {
           _makeTextOrder("Data", _order.date),
           _makeTextOrder("Status", _order.status),
           _makeTextOrder("Total", _order.total.toString()),
-          _makeTextOrder("Mesa", _order.table),
           _makeTextOrder("Comentário", _order.comment),
           Container(height: 30),
           Text("Comidas",
