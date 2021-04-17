@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutterfood/data/network/repositories/food_repository.dart';
 import '../models/Order.dart';
@@ -54,6 +55,12 @@ abstract class _OrdersStoreBase with Store {
     //print(response);
 
     response.map((order) => add(Order.fromJson(order))).toList();
+    /* response
+        .map((order) => order != null ? Order.fromJson(order) : Container()); */
+
+    /* _order.comment != null
+              ? _makeTextOrder("Comentário", _order.comment)
+              : Container() */
 
     isLoading = false;
   }

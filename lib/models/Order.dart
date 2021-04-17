@@ -28,7 +28,7 @@ class Order {
     List<Food> _foodsApi = (jsonData['products'] as List)
         .map((food) => Food.fromJson(food))
         .toList();
-    List<Evaluation> _evaluationsApi = (jsonData['evalutations'] as List)
+    List<Evaluation> _evaluationsApi = (jsonData['evaluations'] as List)
         .map((evaluation) => Evaluation.fromJson(evaluation))
         .toList();
 
