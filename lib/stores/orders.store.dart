@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutterfood/data/network/repositories/evaluation_repository.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutterfood/data/network/repositories/food_repository.dart';
 import '../models/Order.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import '../data/network/repositories/order_repository.dart';
+import '../data/network/repositories/evaluation_repository.dart';
 part 'orders.store.g.dart';
 
 class OrdersStore = _OrdersStoreBase with _$OrdersStore;
@@ -11,6 +13,7 @@ class OrdersStore = _OrdersStoreBase with _$OrdersStore;
 abstract class _OrdersStoreBase with Store {
   /* Aqui ja podemos chamar os métodos de FoodRepository */
   OrderRepository _orderRepository = OrderRepository();
+  EvaluationRepository _evaluationRepository = EvaluationRepository();
 
   @observable
   bool isMakingOrder = false;
@@ -55,12 +58,16 @@ abstract class _OrdersStoreBase with Store {
     //print(response);
 
     response.map((order) => add(Order.fromJson(order))).toList();
-    /* response
-        .map((order) => order != null ? Order.fromJson(order) : Container()); */
 
-    /* _order.comment != null
-              ? _makeTextOrder("Comentário", _order.comment)
-              : Container() */
+    isLoading = false;
+  }
+
+  @action
+  Future evaluationOrder(String tokenCompany, int stars,
+      {String comment}) async {
+    isLoading = true;
+    await _evaluationRepository.evaluationOrder(orderIdentify, stars,
+        comment: comment);
 
     isLoading = false;
   }

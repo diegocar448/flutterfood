@@ -71,6 +71,16 @@ mixin _$OrdersStore on _OrdersStoreBase, Store {
     return _$getMyOrdersAsyncAction.run(() => super.getMyOrders());
   }
 
+  final _$evaluationOrderAsyncAction =
+      AsyncAction('_OrdersStoreBase.evaluationOrder');
+
+  @override
+  Future<dynamic> evaluationOrder(String tokenCompany, int stars,
+      {String comment}) {
+    return _$evaluationOrderAsyncAction.run(
+        () => super.evaluationOrder(tokenCompany, stars, comment: comment));
+  }
+
   final _$_OrdersStoreBaseActionController =
       ActionController(name: '_OrdersStoreBase');
 
