@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -108,6 +106,7 @@ class OrderDetailsScreen extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     "/evaluation-order",
+                    arguments: _order.identify,
                   );
                 },
                 color: Colors.orange,

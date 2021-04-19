@@ -1,20 +1,31 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
+
 import '../../widgets/flutter_bottom_navigator.dart';
+import '../../stores/orders.store.dart';
 
 class EvaluationScreen extends StatelessWidget {
-  const EvaluationScreen({Key key}) : super(key: key);
+  String orderIdentify;
+  int stars = 1;
+  TextEditingController _comment = TextEditingController();
+  OrdersStore _ordersStore;
 
   @override
   Widget build(BuildContext context) {
+    _ordersStore = Provider.of<OrdersStore>(context);
+    RouteSettings settings = ModalRoute.of(context).settings;
+    orderIdentify = settings.arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text('Avaliar o pedido'),
         centerTitle: true,
       ),
       backgroundColor: Theme.of(context).backgroundColor,
-      body: _buildScreenEvaluationOrder(context),
+      body: Observer(
+        builder: (context) => _buildScreenEvaluationOrder(context),
+      ),
       bottomNavigationBar: FlutterFoodBottomNavigator(1),
     );
   }
@@ -33,7 +44,7 @@ class EvaluationScreen extends StatelessWidget {
   Widget _buildHeader() {
     return Container(
       child: Text(
-        "Avaliar o Pedido: 112312",
+        "Avaliar o Pedido: $orderIdentify",
         style: TextStyle(
             color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
       ),
@@ -45,7 +56,7 @@ class EvaluationScreen extends StatelessWidget {
       child: Column(
         children: [
           RatingBar.builder(
-            initialRating: 1,
+            initialRating: stars.toDouble(),
             minRating: 1,
             direction: Axis.horizontal,
             allowHalfRating: true,
@@ -57,12 +68,11 @@ class EvaluationScreen extends StatelessWidget {
               Icons.star,
               color: Colors.amber,
             ),
-            onRatingUpdate: (value) {
-              print(value);
-            },
+            onRatingUpdate: (value) => stars = value.toInt(),
           ),
           Container(height: 14),
           TextFormField(
+            controller: _comment,
             autocorrect: true,
             style: TextStyle(color: Theme.of(context).primaryColor),
             cursorColor: Theme.of(context).primaryColor,
@@ -86,12 +96,15 @@ class EvaluationScreen extends StatelessWidget {
               //margin: EdgeInsets.only(bottom: 30, top: 10),
               //padding: EdgeInsets.only(left: 20, right: 20),
               child: RaisedButton(
-                  onPressed: () {
-                    print("Avaliar o pedido");
-                  },
+                  onPressed: () => _ordersStore.isLoading
+                      ? null
+                      : makeEvaluationOrder(context),
                   color: Theme.of(context).primaryColor,
                   elevation: 2.2,
-                  child: Text("Avaliar o Pedido",
+                  child: Text(
+                      _ordersStore.isLoading
+                          ? 'Avaliando...'
+                          : 'Avaliar o Pedido',
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
                   shape: RoundedRectangleBorder(
@@ -100,5 +113,12 @@ class EvaluationScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future makeEvaluationOrder(context) async {
+    await _ordersStore.evaluationOrder(orderIdentify, stars,
+        comment: _comment.text);
+
+    Navigator.pushReplacementNamed(context, '/my-orders');
   }
 }

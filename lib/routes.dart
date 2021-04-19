@@ -7,7 +7,7 @@ import './screens/restaurants/restaurants_page.dart';
 import 'screens/foods/foods_page.dart';
 import './screens/carts/cart_page.dart';
 import './screens/orders/order_page.dart';
-import './screens/orders/evaluation_order.dart';
+import 'screens/evaluation_order/evaluation_order.dart';
 import './screens/order_details/order_details.dart';
 import './screens/profile/profile_page.dart';
 

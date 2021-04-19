@@ -63,9 +63,10 @@ abstract class _OrdersStoreBase with Store {
   }
 
   @action
-  Future evaluationOrder(String tokenCompany, int stars,
+  Future evaluationOrder(String orderIdentify, int stars,
       {String comment}) async {
     isLoading = true;
+    print("Entrou");
     await _evaluationRepository.evaluationOrder(orderIdentify, stars,
         comment: comment);
 
