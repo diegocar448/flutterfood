@@ -31,7 +31,7 @@ abstract class _AuthStoreBase with Store {
   void setLoading(bool value) => isLoading = value;
 
   @action
-  Future<bool> auth(String email, String password) async {
+  Future auth(String email, String password) async {
     setLoading(true);
 
     await _authRepository.auth(email, password);
@@ -58,13 +58,9 @@ abstract class _AuthStoreBase with Store {
   }
 
   @action
-  Future<bool> getMe() async {
-    /* Aqui atualizamos o nosso user */
-    User user = await _authRepository.getMe();
-
-    setUser(user);
-
-    return true;
+  Future getMe() async {
+    /* Aqui atualizamos o nosso user, dando certo seta o user*/
+    await _authRepository.getMe().then((user) => setUser(user));
   }
 
   @action
