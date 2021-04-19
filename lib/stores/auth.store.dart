@@ -33,7 +33,7 @@ abstract class _AuthStoreBase with Store {
   @action
   Future auth(String email, String password) async {
     setLoading(true);
-
+    print([email, password]);
     await _authRepository.auth(email, password);
 
     /* Logo após a autenticação pegamos o dados do usuario autenticado */
@@ -41,7 +41,7 @@ abstract class _AuthStoreBase with Store {
 
     setLoading(false);
 
-    return true;
+    //return true;
   }
 
   @action

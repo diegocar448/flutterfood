@@ -42,7 +42,7 @@ mixin _$AuthStore on _AuthStoreBase, Store {
   final _$authAsyncAction = AsyncAction('_AuthStoreBase.auth');
 
   @override
-  Future<bool> auth(String email, String password) {
+  Future<dynamic> auth(String email, String password) {
     return _$authAsyncAction.run(() => super.auth(email, password));
   }
 
@@ -57,7 +57,7 @@ mixin _$AuthStore on _AuthStoreBase, Store {
   final _$getMeAsyncAction = AsyncAction('_AuthStoreBase.getMe');
 
   @override
-  Future<bool> getMe() {
+  Future<dynamic> getMe() {
     return _$getMeAsyncAction.run(() => super.getMe());
   }
 
