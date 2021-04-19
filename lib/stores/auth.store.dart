@@ -34,14 +34,14 @@ abstract class _AuthStoreBase with Store {
   Future auth(String email, String password) async {
     setLoading(true);
     print([email, password]);
-    await _authRepository.auth(email, password);
 
     /* Logo após a autenticação pegamos o dados do usuario autenticado */
-    await getMe();
+    await _authRepository
+        .auth(email, password)
+        .then((value) async => await getMe())
+        .whenComplete(() => setLoading(false));
 
-    setLoading(false);
-
-    //return true;
+    return true;
   }
 
   @action

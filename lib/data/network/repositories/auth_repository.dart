@@ -31,6 +31,7 @@ class AuthRepository {
 
       return response;
     } on DioError catch (e) {
+      Future.error({});
       print(e.toString());
       print(e.response);
       print(e.response.statusCode);
@@ -59,7 +60,7 @@ class AuthRepository {
 
   Future<User> getMe() async {
     final String token = await storage.read(key: 'token_sanctum');
-    
+
     if (token != null) {
       _dio.options.headers['Authorization'] = 'Bearer ' + token;
     }
