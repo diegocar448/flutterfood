@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutterfood/data/network/interceptors/dio_interceptor.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutterfood/screens/auth/register_page.dart';
@@ -15,6 +17,7 @@ class LoginScreen extends StatelessWidget {
   /* propriedade para manipular as informações dos nossos widget */
   TextEditingController _email = new TextEditingController();
   TextEditingController _password = new TextEditingController();
+  FlutterSecureStorage storage = new FlutterSecureStorage();
 
   @override
   Widget build(BuildContext context) {

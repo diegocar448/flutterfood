@@ -178,8 +178,7 @@ class RegisterScreen extends StatelessWidget {
   }
 
   Future register(context) async {
-    await _authStore.register(_name.text, _email.text, _password.text);
-
-    Navigator.pushReplacementNamed(context, '/restaurants');
+    await _authStore.register(_name.text, _email.text, _password.text).then(
+        (value) => Navigator.pushReplacementNamed(context, '/restaurants'));
   }
 }

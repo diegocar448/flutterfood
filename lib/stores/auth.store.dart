@@ -33,26 +33,25 @@ abstract class _AuthStoreBase with Store {
   @action
   Future auth(String email, String password) async {
     setLoading(true);
-    print([email, password]);
 
     /* Logo após a autenticação pegamos o dados do usuario autenticado */
-    await _authRepository
+    return await _authRepository
         .auth(email, password)
-        .then((value) async => await getMe())
-        .whenComplete(() => setLoading(false));
+        .then((value) async /* => */ {
+      await getMe();
+    }).whenComplete(() => setLoading(false));
 
-    return true;
+    //return true;
   }
 
   @action
   Future<bool> register(String name, String email, String password) async {
     setLoading(true);
 
-    await _authRepository.register(name, email, password);
-
-    await auth(email, password);
-
-    setLoading(false);
+    await _authRepository
+        .register(name, email, password)
+        .then((value) async => await auth(email, password))
+        .whenComplete(() => setLoading(false));
 
     return true;
   }
@@ -60,7 +59,9 @@ abstract class _AuthStoreBase with Store {
   @action
   Future getMe() async {
     /* Aqui atualizamos o nosso user, dando certo seta o user*/
-    await _authRepository.getMe().then((user) => setUser(user));
+    await _authRepository.getMe().then((user) {
+      setUser(user);
+    }).catchError((error) => null);
   }
 
   @action

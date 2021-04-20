@@ -25,8 +25,6 @@ class AuthRepository {
         'device_name': deviceName,
       });
 
-      print(response.data['token']);
-
       /* passamos o token para o metodo que vai salvar o token sanctum em nossa app */
       saveToken(response.data['token']);
 
@@ -50,6 +48,9 @@ class AuthRepository {
 
       return response;
     } on DioError catch (e) {
+      Future.error({});
+
+      ApiException(e.response);
       print(e.toString());
       print(e.response);
       print(e.response.statusCode);
@@ -67,7 +68,6 @@ class AuthRepository {
     try {
       final response = await _dio.get('auth/me');
 
-      print(response.data);
       return User.fromJson(response.data['data']);
     } on DioError catch (e) {
       Future.error({});
