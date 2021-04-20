@@ -162,7 +162,8 @@ class LoginScreen extends StatelessWidget {
   /* Aqui vamos usar uma instancia do Mobx para fazer a autenticação*/
   Future auth(context) async {
     /* Após autenticar faremos um redirect */
-    await _authStore.auth(_email.text, _password.text).then(
-        (value) => Navigator.pushReplacementNamed(context, '/restaurants'));
+    await _authStore
+        .auth(_email.text, _password.text)
+        .then((value) => Navigator.pushReplacementNamed(context, '/'));
   }
 }
