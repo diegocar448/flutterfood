@@ -25,16 +25,22 @@ class ApiException {
 
         errors.forEach((key, value) => allErrors = allErrors + value[0] + "\n");
 
-        return FlutterFoodToast.error(allErrors);
+        FlutterFoodToast.error(allErrors);
+
+        return;
       }
 
-      return FlutterFoodToast.error('Dados inválidos');
+      FlutterFoodToast.error('Dados inválidos');
+      return;
       /* Aqui verificamos se o erro http ocorreu por algum problema no backend */
     } else if (response.statusCode >= 400 && response.statusCode < 500) {
-      return FlutterFoodToast.error('Requisição inválida');
+      FlutterFoodToast.error('Requisição inválida');
+      return;
     }
 
-    return FlutterFoodToast.error(
+    FlutterFoodToast.error(
         'Falha ao fazer a requisição (tente novamente mais tarde)');
+
+    return;
   }
 }

@@ -49,7 +49,7 @@ mixin _$AuthStore on _AuthStoreBase, Store {
   final _$registerAsyncAction = AsyncAction('_AuthStoreBase.register');
 
   @override
-  Future<bool> register(String name, String email, String password) {
+  Future<dynamic> register(String name, String email, String password) {
     return _$registerAsyncAction
         .run(() => super.register(name, email, password));
   }
